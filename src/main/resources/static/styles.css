@@ -1,0 +1,708 @@
+/* =====================================================
+   RESET / GENERAL
+===================================================== */
+
+body{
+    font-family:'Poppins', sans-serif;
+    background:#f4f6f9;
+    margin:0;
+    padding:0;
+}
+
+a{
+    text-decoration:none;
+}
+
+button{
+    background:linear-gradient(135deg,#1a73e8,#0056b3);
+    color:white;
+    border:none;
+    padding:10px 15px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:500;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:translateY(-2px);
+    box-shadow:0 6px 15px rgba(0,0,0,0.2);
+}
+
+/* =====================================================
+   HEADER PRINCIPAL
+===================================================== */
+
+.top-header,
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:#f5f5f5;
+    padding:15px 25px;
+}
+
+.menu-icon{
+    font-size:28px;
+    cursor:pointer;
+}
+
+.logo h2,
+.logo a{
+    margin:0;
+    font-size:24px;
+    font-weight:700;
+    color:#1a73e8;
+}
+
+.info,
+.header-right{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    font-size:18px;
+}
+
+/* =====================================================
+   MENUS
+===================================================== */
+
+.menu,
+.menu-categorias{
+    background:#1a73e8;
+    display:flex;
+    justify-content:center;
+    gap:40px;
+    padding:14px;
+}
+
+.menu a,
+.menu-categorias a{
+    color:white;
+    font-weight:600;
+}
+
+/* =====================================================
+   MENU DESPLEGABLE
+===================================================== */
+
+.dropdown-menu{
+    display:none;
+    position:absolute;
+    top:65px;
+    left:20px;
+    width:180px;
+    background:white;
+    border-radius:10px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.15);
+    overflow:hidden;
+    z-index:9999;
+}
+
+.dropdown-menu a{
+    display:block;
+    padding:12px;
+    color:#333;
+}
+
+.dropdown-menu a:hover{
+    background:#f5f5f5;
+}
+
+/* =====================================================
+   MENU USUARIO
+===================================================== */
+
+.usuario-box{
+    position:relative;
+    display:inline-block;
+}
+
+.menu-usuario{
+    display:none;
+    position:absolute;
+    top:38px;
+    right:0;
+    min-width:170px;
+    background:white;
+    border-radius:10px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.12);
+    overflow:hidden;
+    z-index:99999;
+}
+
+.menu-usuario a{
+    display:block;
+    padding:12px 16px;
+    color:#333;
+    font-size:14px;
+}
+
+.menu-usuario a:hover{
+    background:#f5f5f5;
+}
+
+/* =====================================================
+   BANNER
+===================================================== */
+
+.banner{
+    background:url('https://images.unsplash.com/photo-1517336714731-489689fd1ca8') no-repeat center;
+    background-size:cover;
+    height:350px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.banner-content{
+    background:rgba(0,0,0,0.6);
+    color:white;
+    padding:20px;
+    border-radius:10px;
+    text-align:center;
+}
+
+.banner h1{
+    margin:0;
+    font-size:40px;
+}
+
+.banner p{
+    margin:10px 0;
+    font-size:18px;
+}
+
+/* =====================================================
+   PRODUCTOS HOME
+===================================================== */
+
+.productos{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:30px;
+    padding:30px;
+    max-width:1200px;
+    margin:40px auto;
+    background:#fafafa;
+    border-radius:10px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+.card{
+    width:200px;
+    background:white;
+    padding:15px;
+    border-radius:10px;
+    text-align:center;
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:scale(1.05);
+}
+
+.card img{
+    width:100%;
+    border-radius:10px;
+}
+
+.card h3{
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    font-weight:500;
+}
+
+.seccion{
+    max-width:1200px;
+    margin:40px auto;
+}
+
+.seccion-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.ver-todo{
+    background:#1a73e8;
+    color:white;
+    border:none;
+    padding:10px 18px;
+    border-radius:8px;
+    cursor:pointer;
+}
+/* =====================================================
+   INTERFAZ PAGO
+===================================================== */
+
+.pago-container{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#f4f6f9;
+}
+
+.formulario{
+    width:420px;
+    background:white;
+    padding:40px;
+    border-radius:18px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.12);
+}
+
+.formulario h1{
+    text-align:center;
+    margin-bottom:30px;
+    color:#111;
+}
+
+.formulario input{
+    width:100%;
+    padding:14px;
+    margin-bottom:15px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    font-size:15px;
+    outline:none;
+}
+
+.formulario input:focus{
+    border-color:#1a73e8;
+    box-shadow:0 0 8px rgba(26,115,232,0.2);
+}
+
+.formulario button{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    font-size:16px;
+    font-weight:600;
+    margin-top:10px;
+}
+
+
+/* =====================================================
+   PRODUCTOS VERTICALES CATEGORIA
+===================================================== */
+
+.productos-vertical{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+    width:80%;
+    margin:30px auto;
+}
+
+.productos-vertical .card{
+    width:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:30px;
+    padding:20px 30px;
+}
+
+.productos-vertical .card img{
+    width:150px;
+    height:150px;
+    object-fit:contain;
+}
+
+.productos-vertical .card h3{
+    flex:1;
+    font-size:22px;
+    text-align:left;
+}
+
+.productos-vertical .card p{
+    width:130px;
+    font-size:22px;
+    font-weight:700;
+    color:#1a73e8;
+    text-align:center;
+}
+
+/* =====================================================
+   CARRITO LATERAL
+===================================================== */
+
+.cart{
+    position:fixed;
+    top:0;
+    right:-300px;
+    width:300px;
+    height:100%;
+    background:white;
+    box-shadow:-5px 0 15px rgba(0,0,0,0.2);
+    transition:0.3s;
+    z-index:1000;
+    display:flex;
+    flex-direction:column;
+}
+
+.cart-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px;
+    background:#1a73e8;
+    color:white;
+}
+
+.close-cart{
+    cursor:pointer;
+    font-size:20px;
+}
+
+.cart-items{
+    flex:1;
+    padding:15px;
+    overflow-y:auto;
+}
+
+.cart-items div{
+    background:#f5f5f5;
+    padding:10px;
+    margin-bottom:12px;
+    border-radius:8px;
+}
+
+.cart-footer{
+    padding:15px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.acciones{
+    display:flex;
+    gap:5px;
+    margin-top:8px;
+}
+
+.acciones button{
+    width:35px;
+    height:35px;
+    padding:0;
+}
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+.login-container{
+    width:380px;
+    margin:80px auto;
+    background:white;
+    padding:40px;
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.15);
+    text-align:center;
+}
+
+.login-container h1{
+    color:#1a73e8;
+    margin-bottom:25px;
+}
+
+.login-form{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.login-form input{
+    padding:14px;
+    border:1px solid #dcdcdc;
+    border-radius:10px;
+}
+
+.registro-texto{
+    margin-top:20px;
+    font-size:14px;
+    color:#555;
+}
+
+/* =====================================================
+   ADMIN
+===================================================== */
+
+.admin-layout{
+    display:flex;
+    min-height:100vh;
+}
+
+.sidebar{
+    width:250px;
+    background:#0d47a1;
+    color:white;
+    padding:30px;
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.sidebar a{
+    color:white;
+    padding:12px;
+    border-radius:8px;
+}
+
+.sidebar a:hover{
+    background:rgba(255,255,255,0.2);
+}
+
+.admin-content{
+    flex:1;
+    padding:40px;
+}
+
+.tabla-productos{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+.tabla-productos th{
+    background:#1a73e8;
+    color:white;
+    padding:15px;
+}
+
+.tabla-productos td{
+    padding:15px;
+    border-bottom:1px solid #eee;
+    text-align:center;
+}
+
+.tabla-productos img{
+    width:60px;
+    height:60px;
+    object-fit:contain;
+}
+
+/* =====================================================
+   FORMULARIOS EDITAR / NUEVO
+===================================================== */
+
+.editar-body,
+.contacto-body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#111111,#1f1f1f,#2b2b2b);
+}
+
+.editar-box,
+.contacto-box{
+    width:520px;
+    background:white;
+    padding:40px;
+    border-radius:18px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.18);
+}
+
+.editar-box input,
+.contacto-box input,
+.contacto-box textarea{
+    width:100%;
+    padding:14px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    margin-top:12px;
+}
+
+.editar-botones{
+    margin-top:30px;
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+}
+
+/* =====================================================
+   PROMOCIONES
+===================================================== */
+
+.promo-body{
+    background:#f5f6fa;
+    padding:40px;
+}
+
+.promo-title{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.promo-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+}
+
+.promo-card{
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    text-align:center;
+    box-shadow:0 5px 15px rgba(0,0,0,0.08);
+}
+
+.promo-card img{
+    width:150px;
+    height:150px;
+    object-fit:contain;
+}
+
+.precio-antiguo{
+    text-decoration:line-through;
+    color:#999;
+}
+
+.precio-nuevo{
+    color:#e74c3c;
+    font-size:22px;
+    font-weight:700;
+}
+
+.descuento{
+    background:#27ae60;
+    color:white;
+    padding:6px 10px;
+    border-radius:8px;
+    font-size:13px;
+}
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.footer{
+    background:#111;
+    color:#ccc;
+    text-align:center;
+    padding:30px;
+}
+
+.footer p{
+    margin:8px 0;
+}
+
+/* =====================================================
+   PRODUCTO-LISTA
+===================================================== */
+
+.top-productos{
+    width:100%;
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+    align-items:center;
+    padding:20px;
+    box-sizing:border-box;
+}
+
+.gestion-body{
+    width:100%;
+}
+
+.top-productos h1{
+    margin:0;
+    text-align:center;
+}
+
+.btn-add{
+    background:#1a73e8;
+    padding:12px 22px;
+    border-radius:10px;
+    font-weight:600;
+}
+
+.btn-volver{
+    flex:1;
+    background:#555;
+    color:white;
+    text-align:center;
+    padding:14px;
+    border-radius:10px;
+    font-weight:600;
+    text-decoration:none;
+}
+
+.btn-guardar{
+    flex:1;
+    background:#1a73e8;
+    color:white;
+    border:none;
+    padding:14px;
+    border-radius:10px;
+    font-weight:600;
+}
+
+.btn-edit{
+    background:#27ae60 !important;
+    color:white;
+    border:none;
+    padding:10px 15px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.btn-delete{
+    background:#e74c3c !important;
+    color:white;
+    border:none;
+    padding:10px 15px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+/* =====================================================
+   BOTON VOLVER
+===================================================== */
+
+.btn-volver-admin{
+    justify-self:start;
+    background:linear-gradient(135deg,#555,#333);
+    color:white;
+    padding:12px 20px;
+    border-radius:10px;
+    font-weight:600;
+    text-decoration:none;
+    transition:0.3s;
+    box-shadow:0 5px 12px rgba(0,0,0,0.15);
+}
+
+.btn-volver-admin:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 18px rgba(0,0,0,0.2);
+}
+
+.btn-add{
+    justify-self:end;
+    background:#1a73e8;
+    color:white;
+    padding:12px 20px;
+    border-radius:10px;
+    font-weight:600;
+    text-decoration:none;
+    transition:0.3s;
+}
+
+.ver-todo{
+    background:#1a73e8;
+    color:white;
+    padding:10px 18px;
+    border-radius:8px;
+    font-weight:600;
+    text-decoration:none;
+}
+
