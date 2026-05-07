@@ -19,17 +19,25 @@
 
     <h1>Finalizar Compra</h1>
 
-        <input type="text" placeholder="Nombre completo">
+    <!-- FORM REAL -->
+    <form action="/pedido/crear" method="post">
 
-        <input type="text" placeholder="Dirección">
+        <input type="text" name="dni" placeholder="DNI" required>
 
+        <input type="text" name="nombreCliente" placeholder="Nombre completo" required>
+
+        <input type="text" name="direccion" placeholder="Dirección" required>
+
+        <!-- Estos son solo visuales (no se guardan aún) -->
         <input type="text" placeholder="Número de tarjeta">
 
         <input type="text" placeholder="Fecha vencimiento">
 
         <input type="text" placeholder="CVV">
 
-        <button>Confirmar Pago</button>
+        <button type="submit">Confirmar Pago</button>
+
+    </form>
 
     </div>
 

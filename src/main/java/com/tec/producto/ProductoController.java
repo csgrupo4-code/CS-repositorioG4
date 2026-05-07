@@ -44,11 +44,11 @@ public class ProductoController {
             String nombre,
             String precio,
             String imagen,
-            String categoria
+            int categoriaId
     ){
 
         Producto p = new Producto(
-                id,nombre,precio,imagen,categoria,"false"
+                id,nombre,precio,imagen,categoriaId,"false"
         );
 
         ProductoService service = new ProductoServiceImpl();
@@ -69,13 +69,13 @@ public class ProductoController {
             String nombre,
             String precio,
             String imagen,
-            String categoria
+            int categoriaId
     ){
 
         int id = (int)(Math.random()*1000);
 
         Producto p = new Producto(
-                id,nombre,precio,imagen,categoria,"false"
+                id,nombre,precio,imagen,categoriaId,"false"
         );
 
         ProductoService service = new ProductoServiceImpl();

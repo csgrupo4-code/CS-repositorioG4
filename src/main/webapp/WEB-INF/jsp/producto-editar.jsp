@@ -1,5 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page import="com.tec.producto.Producto" %>
+<%@ page import="com.tec.categoria.*" %>
+
+<%
+CategoriaServiceImpl catService = new CategoriaServiceImpl();
+%>
 
 <%
 Producto p = (Producto) request.getAttribute("producto");
@@ -37,8 +42,21 @@ value="<%= p.getPrecio() %>">
 value="<%= p.getImagen() %>">
 
 <label>Categoría</label>
-<input type="text" name="categoria"
-value="<%= p.getCategoria() %>">
+<select name="categoriaId" class="select-categoria">
+<%
+for(Categoria c : catService.listar()){
+%>
+
+<option value="<%= c.getId() %>"
+<%= (c.getId() == p.getCategoriaId()) ? "selected" : "" %>>
+    <%= c.getNombre() %>
+</option>
+
+<%
+}
+%>
+
+</select>
 
 <div class="editar-botones">
 

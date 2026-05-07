@@ -20,11 +20,6 @@ public class MainController {
 
     }
 
-    @GetMapping("/carrito")
-    public String carrito() {
-        return "carrito";
-    }
-
     @GetMapping("/contacto")
     public String contacto() {
         return "contacto";
@@ -40,14 +35,36 @@ public class MainController {
         return "promociones";
     }
 
+
     @GetMapping("/categoria")
-    public String categoria(String tipo, Model model){
+    public String categoria(Integer tipo, Model model){
 
         ProductoService service = new ProductoServiceImpl();
 
-        model.addAttribute("productos", service.listar());
+        List<Producto> lista = service.listar();
+        List<Producto> filtrados = new ArrayList<>();
 
-        model.addAttribute("tipo", tipo);
+        if(tipo != null){
+            for(Producto p : lista){
+                if(p.getCategoriaId() == tipo){
+                    filtrados.add(p);
+                }
+            }
+        } else {
+            filtrados = lista; // muestra todo si no hay filtro
+        }
+
+        String nombreCategoria = "Todas";
+
+        if(tipo != null){
+            if(tipo == 4) nombreCategoria = "Celulares";
+            if(tipo == 1) nombreCategoria = "Laptops";
+            if(tipo == 3) nombreCategoria = "Computadoras";
+            if(tipo == 2) nombreCategoria = "Impresoras";
+        }
+
+        model.addAttribute("productos", filtrados);
+        model.addAttribute("nombreCategoria", nombreCategoria);
 
         return "categoria";
     }

@@ -21,15 +21,18 @@
         <h2>SysTec Admin</h2>
 
         <a href="/producto/lista">📦 Productos</a>
+        <a href="/categoria/lista">📂 Categorías</a>
+        <a href="/pedido/lista">📦 Pedidos</a>
 
-        <a href="#" onclick="cerrarSesion()">
-        🚪 Cerrar Sesión
+        <!-- LOGOUT -->
+        <a href="/logout">
+            🚪 Cerrar Sesión
         </a>
 
     </div>
 
     <!-- CONTENIDO -->
-    <div class="admin-content" id="contenido">
+    <div class="admin-content">
 
         <h1>Panel Administrador</h1>
         <p>Bienvenido Admin</p>
@@ -38,15 +41,5 @@
 
 </div>
 
-<script>
-
-function cerrarSesion() {
-
-    localStorage.removeItem("usuarioLogueado");
-    localStorage.removeItem("rol");
-    window.location.href = "/";
-}
-
-</script>
 </body>
 </html>

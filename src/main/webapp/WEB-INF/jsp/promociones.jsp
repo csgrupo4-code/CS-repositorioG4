@@ -18,6 +18,9 @@ List<Producto> productos =
 
 <body class="promo-body">
 
+<!-- HEADER -->
+<%@ include file="/header.jsp" %>
+
 <h1 class="promo-title">🔥 Productos en Promoción</h1>
 
 <div class="promo-grid">
@@ -43,6 +46,10 @@ S/. <%= Double.parseDouble(p.getPrecio()) * 0.85 %>
 </p>
 
 <span class="descuento">15% OFF</span>
+
+<a href="/carrito/agregar?id=<%= p.getId() %>" class="btn-agregar">
+    🛒 Añadir al carrito
+</a>
 
 </div>
 

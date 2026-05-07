@@ -6,17 +6,17 @@ public class Producto {
     private String nombre;
     private String precio;
     private String imagen;
-    private String categoria;
+    private int categoriaId;
     private String destacado;
 
     public Producto(int id, String nombre, String precio,
-                    String imagen, String categoria, String destacado) {
+                    String imagen, int categoriaId, String destacado) {
 
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
         this.imagen = imagen;
-        this.categoria = categoria;
+        this.categoriaId  = categoriaId;
         this.destacado = destacado;
     }
 
@@ -36,11 +36,19 @@ public class Producto {
         return imagen;
     }
 
-    public String getCategoria() {
-        return categoria;
-    }
+    public int getCategoriaId() { return categoriaId; }
 
     public String getDestacado() {
         return destacado;
+    }
+
+    public double getPrecioFinal(){
+        double precio = Double.parseDouble(this.precio);
+
+        if("true".equals(this.destacado)){
+            return precio * 0.85;
+        }
+
+        return precio;
     }
 }

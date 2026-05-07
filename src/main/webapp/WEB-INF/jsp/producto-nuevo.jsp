@@ -1,4 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page import="com.tec.categoria.*" %>
+
+<%
+CategoriaServiceImpl catService = new CategoriaServiceImpl();
+%>
 
 <html>
 <head>
@@ -26,8 +31,21 @@
 <label>Imagen URL</label>
 <input type="text" name="imagen">
 
-<label>Categoría</label>
-<input type="text" name="categoria">
+<select name="categoriaId" class="select-categoria">
+
+<%
+for(Categoria c : catService.listar()){
+%>
+
+<option value="<%= c.getId() %>">
+    <%= c.getNombre() %>
+</option>
+
+<%
+}
+%>
+
+</select>
 
 <div class="editar-botones">
 

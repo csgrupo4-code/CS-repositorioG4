@@ -1,15 +1,20 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page import="java.util.*" %>
 <%@ page import="com.tec.producto.Producto" %>
+<%@ page import="com.tec.categoria.*" %>
 
 <%
 List<Producto> productos =
 (List<Producto>) request.getAttribute("productos");
+
+CategoriaServiceImpl catService = new CategoriaServiceImpl();
 %>
 
-<link rel="stylesheet" href="/styles.css">
-
 <html>
+<head>
+<link rel="stylesheet" href="/styles.css">
+</head>
+
 <body>
 
 <div class="top-productos">
@@ -38,6 +43,14 @@ List<Producto> productos =
 
 <%
 for(Producto p : productos){
+
+    String nombreCategoria = "";
+
+    for(Categoria c : catService.listar()){
+        if(c.getId() == p.getCategoriaId()){
+            nombreCategoria = c.getNombre();
+        }
+    }
 %>
 
 <tr>
@@ -50,7 +63,7 @@ for(Producto p : productos){
 
 <td>S/. <%= p.getPrecio() %></td>
 
-<td><%= p.getCategoria() %></td>
+<td><%= nombreCategoria %></td>
 
 <td>
 

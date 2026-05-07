@@ -1,35 +1,31 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 
-<!DOCTYPE html>
 <html>
 <head>
-
-<title>Login</title>
-
+<title>Registro</title>
 <link rel="stylesheet" href="/styles.css">
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
+<meta charset="UTF-8">
 </head>
+
 <body class="auth-body">
 
 <div class="auth-container">
 
-    <h1>Iniciar Sesión</h1>
+    <h1>Registrate</h1>
 
-    <form action="/login" method="post" class="auth-form">
+    <form action="/registro" method="post" class="auth-form">
 
         <input type="text" name="usuario" placeholder="Usuario" required>
 
         <input type="password" name="password" placeholder="Contraseña" required>
 
-        <button type="submit">Ingresar</button>
+        <button type="submit">Registrarse</button>
 
     </form>
 
     <p class="auth-texto">
-        ¿No tienes cuenta?
-        <a href="/registro">Regístrate</a>
+        ¿Ya tienes cuenta?
+        <a href="/login">Inicia Sesion</a>
     </p>
 
 </div>
