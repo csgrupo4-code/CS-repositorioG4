@@ -1,6 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="java.util.*" %>
-<%@ page import="com.tec.carrito.ItemCarrito" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <html>
 <head>
@@ -12,75 +11,68 @@
 
 <%@ include file="/header.jsp" %>
 
-
-
-<%
-List<ItemCarrito> carrito =
-(List<ItemCarrito>) request.getAttribute("carrito");
-
-double total = 0;
-%>
-
-
 <div class="carrito-layout">
 
     <!-- IZQUIERDA -->
     <div class="carrito-left">
 
-        <h3 class="titulo">PRODUCTO</h3>
+        <h3 class="titulo">
+            PRODUCTO
+        </h3>
 
-        <%
-        if(carrito != null && !carrito.isEmpty()){
+        <c:choose>
+            <c:when test="${not empty carrito}">
+                <c:forEach items="${carrito}" var="item" varStatus="estado">
 
-        for(int i=0;i<carrito.size();i++){
+                    <div class="carrito-item">
 
-        ItemCarrito item = carrito.get(i);
+                        <img src="${item.producto.imagen}" class="item-img">
 
-        double precio = 0;
-        try{
-            precio = item.getProducto().getPrecioFinal();
-        }catch(Exception e){}
+                        <div class="item-info">
 
-        double subtotal = precio * item.getCantidad();
-        total += subtotal;
-        %>
+                            <p class="nombre">
+                                ${item.producto.nombre}
+                            </p>
 
-        <div class="carrito-item">
+                            <p class="precio">
+                                S/. ${item.producto.precioFinal}
+                            </p>
 
-            <img src="<%= item.getProducto().getImagen() %>" class="item-img">
+                            <div class="cantidad-box">
+                                <a href="/carrito/menos?index=${estado.index}">
+                                    -
+                                </a>
 
-            <div class="item-info">
-                <p class="nombre"><%= item.getProducto().getNombre() %></p>
+                                <span> ${item.cantidad} </span>
 
-                <p class="precio">
-                    S/. <%= item.getProducto().getPrecioFinal() %>
+                                <a href="/carrito/mas?index=${estado.index}">
+                                    +
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                        <div class="item-total">
+                            S/. ${item.subtotal}
+                            <a href="/carrito/eliminar?index=${estado.index}" class="eliminar">
+                                🗑
+                            </a>
+
+                        </div>
+                    </div>
+                </c:forEach>
+
+            </c:when>
+
+            <c:otherwise>
+
+                <p>
+                    No hay productos en el carrito
                 </p>
 
-                <div class="cantidad-box">
-                    <a href="/carrito/menos?index=<%= i %>">-</a>
-                    <span><%= item.getCantidad() %></span>
-                    <a href="/carrito/mas?index=<%= i %>">+</a>
-                </div>
-            </div>
-
-            <div class="item-total">
-                S/. <%= subtotal %>
-                <a href="/carrito/eliminar?index=<%= i %>" class="eliminar">🗑</a>
-            </div>
-
-        </div>
-
-        <%
-        }
-
-        }else{
-        %>
-
-        <p>No hay productos en el carrito</p>
-
-        <%
-        }
-        %>
+            </c:otherwise>
+        </c:choose>
     </div>
 
     <!-- DERECHA -->
@@ -90,7 +82,7 @@ double total = 0;
 
         <div class="total-box">
             <span>Estimated total</span>
-            <strong>S/ <%= total %></strong>
+            <strong> S/. ${total} </strong>
         </div>
 
         <a href="/pago" class="btn-pagar">

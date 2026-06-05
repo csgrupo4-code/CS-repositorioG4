@@ -1,51 +1,64 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="java.util.*" %>
-<%@ page import="com.tec.pedido.Pedido" %>
-
-<%
-List<Pedido> pedidos =
-(List<Pedido>) request.getAttribute("pedidos");
-%>
+<%@ taglib prefix="c"
+uri="jakarta.tags.core" %>
 
 <html>
+
 <head>
 <title>Mis Pedidos</title>
 <link rel="stylesheet" href="/styles.css">
 </head>
 
 <body>
-
 <%@ include file="/header.jsp" %>
 
-
+<c:if test="${param.error == 'noCancelar'}">
+<div class="mensaje-error">
+No se puede cancelar el pedido porque el envío ya se encuentra en camino.
+</div>
+</c:if>
 
 <table class="tabla">
 
 <tr>
-<th>Producto</th>
-<th>Cantidad</th>
+<th>Pedido</th>
 <th>Fecha</th>
 <th>Estado</th>
 <th>Dirección</th>
+<th>Detalle</th>
+<th>Cancelar</th>
 </tr>
 
-<%
-for(Pedido p : pedidos){
-%>
+<c:forEach items="${pedidos}" var="p">
 
 <tr>
-<td><%= p.getProducto() %></td>
-<td><%= p.getCantidad() %></td>
-<td><%= p.getFecha() %></td>
-<td><%= p.getEstado() %></td>
-<td><%= p.getDireccion() %></td>
+<td> #${p.idPedido} </td>
+<td> ${p.fecha} </td>
+<td> ${p.estado} </td>
+<td> ${p.direccion} </td>
+
+<td>
+<a href="/pedido/detalle?id=${p.idPedido}">
+Ver detalle
+</a>
+</td>
+
+<td>
+<c:if test="${p.estado != 'Cancelado' && p.estado != 'Completado'}">
+<form action="/pedido/cancelar" method="post">
+
+<input type="hidden" name="id" value="${p.idPedido}">
+
+<button type="submit" class="btn-delete">
+Cancelar
+</button>
+
+</form>
+</c:if>
+</td>
+
 </tr>
-
-<%
-}
-%>
-
+</c:forEach>
 </table>
-
 </body>
 </html>

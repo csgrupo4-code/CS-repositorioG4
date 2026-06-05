@@ -1,51 +1,60 @@
 package com.tec.categoria;
 
-import java.util.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+@Service
 public class CategoriaServiceImpl implements CategoriaService {
 
-    private static List<Categoria> lista = new ArrayList<>();
-    private static int contador = 1;
+    @Autowired
+    private CategoriaRepository repository;
 
-    static {
+    @Override
+    public List<Categoria> listar(){
 
-        lista.add(new Categoria(contador++, "Laptop"));
-        lista.add(new Categoria(contador++, "Impresoras"));
-        lista.add(new Categoria(contador++, "Computadoras"));
-        lista.add(new Categoria(contador++, "Celulares"));
+        return repository.findAll();
 
     }
 
     @Override
-    public List<Categoria> listar() {
-        return lista;
-    }
+    public void agregar(Categoria c){
 
-    @Override
-    public void agregar(Categoria c) {
-        c = new Categoria(contador++, c.getNombre());
-        lista.add(c);
-    }
+        Categoria existente =
+                repository.findByNombre(
+                        c.getNombre()
+                );
 
-    @Override
-    public void eliminar(int id) {
-        lista.removeIf(c -> c.getId() == id);
-    }
+        if(existente != null){
 
-    @Override
-    public Categoria buscar(int id) {
-        for(Categoria c : lista){
-            if(c.getId() == id) return c;
+            throw new RuntimeException(
+                    "La categoría ya existe."
+            );
         }
-        return null;
+        repository.save(c);
     }
 
     @Override
-    public void actualizar(Categoria c) {
-        for(Categoria cat : lista){
-            if(cat.getId() == c.getId()){
-                cat.setNombre(c.getNombre());
-            }
-        }
+    public Categoria buscar(int id){
+
+        return repository
+                .findById(id)
+                .orElse(null);
+
+    }
+
+    @Override
+    public void actualizar(Categoria c){
+
+        repository.save(c);
+
+    }
+
+    @Override
+    public void eliminar(int id){
+
+        repository.deleteById(id);
+
     }
 }

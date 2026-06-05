@@ -1,40 +1,49 @@
 package com.tec.pedido;
 
-import java.util.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import java.util.List;
 
+@Service
 public class PedidoServiceImpl implements PedidoService {
 
-    private static List<Pedido> lista = new ArrayList<>();
-    private static int contador = 1;
+    @Autowired
+    private PedidoRepository repository;
 
+    @Override
+    public List<Pedido> listar() {
 
-
-    public List<Pedido> listar(){
-        return lista;
+        return repository.findAll();
     }
 
-    public void agregar(Pedido p){
-        lista.add(p);
+    @Override
+    public Pedido agregar(Pedido p) {
+        return repository.save(p);
     }
 
-    public Pedido buscar(int id){
-        for(Pedido p : lista){
-            if(p.getId() == id){
-                return p;
-            }
+    @Override
+    public Pedido buscar(int id) {
+        return repository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void actualizarEstado(int id, String estado) {
+
+        Pedido pedido = buscar(id);
+
+        if(pedido != null){
+            pedido.setEstado(estado);
+
+            repository.save(pedido);
         }
-        return null;
     }
 
-    public void actualizarEstado(int id, String estado){
-        for(Pedido p : lista){
-            if(p.getId() == id){
-                p.setEstado(estado);
-            }
-        }
-    }
-
-    public void eliminar(int id){
-        lista.removeIf(p -> p.getId() == id);
+    @Override
+    public List<Pedido> buscarPorCliente(
+            String nombreCliente
+    ) {
+        return repository.findByNombreCliente(
+                nombreCliente
+        );
     }
 }

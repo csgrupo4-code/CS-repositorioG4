@@ -5,9 +5,7 @@
 <head>
 
     <title>Pagar</title>
-
     <link rel="stylesheet" href="/styles.css">
-
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 </head>
@@ -29,12 +27,9 @@
         <input type="text" name="direccion" placeholder="Dirección" required>
 
         <!-- Estos son solo visuales (no se guardan aún) -->
-        <input type="text" placeholder="Número de tarjeta">
-
+        <input type="text" placeholder="Número de tarjeta" maxlength="16">
         <input type="text" placeholder="Fecha vencimiento">
-
-        <input type="text" placeholder="CVV">
-
+        <input type="text" placeholder="CVV" maxlength="3">
         <button type="submit">Confirmar Pago</button>
 
     </form>

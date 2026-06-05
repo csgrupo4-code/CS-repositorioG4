@@ -4,17 +4,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpSession;
-
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
-
+import com.tec.envio.Envio;
+import com.tec.envio.EnvioRepository;
 import com.tec.carrito.ItemCarrito;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Controller
 @RequestMapping("/pedido")
 public class PedidoController {
 
-    private PedidoService service = new PedidoServiceImpl();
+    @Autowired
+    private EnvioRepository envioRepository;
+
+    @Autowired
+    private PedidoService service;
 
     // =========================
     // ADMIN - VER TODOS LOS PEDIDOS
@@ -35,17 +41,35 @@ public class PedidoController {
         return "pedido-admin";
     }
 
+    @GetMapping("/detalle")
+    public String detallePedido(
+            int id,
+            Model model,
+            HttpSession session){
+
+        if(session.getAttribute("usuario") == null){
+            return "redirect:/login";
+        }
+
+        Pedido pedido = service.buscar(id);
+
+        model.addAttribute("pedido", pedido);
+
+        return "detalle-pedido-admin";
+    }
+
     // =========================
     // CREAR PEDIDO DESDE PAGO
     // =========================
+
     @PostMapping("/crear")
+
     public String crearPedido(
             String dni,
             String direccion,
             HttpSession session){
 
-        List<ItemCarrito> carrito =
-                (List<ItemCarrito>) session.getAttribute("carrito");
+        List<ItemCarrito> carrito = (List<ItemCarrito>) session.getAttribute("carrito");
 
         if(carrito == null || carrito.isEmpty()){
             return "redirect:/carrito";
@@ -53,25 +77,51 @@ public class PedidoController {
 
         String usuario = (String) session.getAttribute("usuario");
 
+        List<DetallePedido> detalles =
+                new ArrayList<>();
+
+        double total = 0;
+
         for(ItemCarrito item : carrito){
 
-            Pedido p = new Pedido(
-                    (int)(Math.random()*1000),
-                    dni,
-                    usuario, // 👈 CLAVE: usar usuario de sesión
-                    item.getProducto().getNombre(),
-                    item.getCantidad(),
-                    "2026-05-05",
-                    "Pendiente",
-                    direccion
-            );
+            DetallePedido detalle = new DetallePedido(
+                            item.getProducto().getNombre(),
+                            item.getCantidad(),
+                            item.getProducto().getPrecioFinal()
+                    );
 
-            service.agregar(p);
+            detalles.add(detalle);
+
+            total += item.getCantidad()
+                    * item.getProducto().getPrecioFinal();
+
         }
+
+        String fecha = LocalDate.now().toString();
+
+        Pedido pedido = new Pedido(
+                null,
+                dni,
+                usuario,
+                fecha,
+                "Facturado",
+                direccion,
+                total,
+                detalles
+        );
+
+        pedido = service.agregar(pedido);
+
+        Envio envio = new Envio();
+
+        envio.setIdPedido(pedido.getIdPedido());
+        envio.setEstado("Preparando");
+
+        envioRepository.save(envio);
 
         session.removeAttribute("carrito");
 
-        return "redirect:/"; // 👈 NO ir al admin
+        return "redirect:/";
     }
 
     // =========================
@@ -86,16 +136,10 @@ public class PedidoController {
             return "redirect:/login";
         }
 
-        List<Pedido> todos = service.listar();
-        List<Pedido> propios = new ArrayList<>();
-
-        for(Pedido p : todos){
-            if(usuario.equals(p.getNombreCliente())){
-                propios.add(p);
-            }
-        }
-
-        model.addAttribute("pedidos", propios);
+        model.addAttribute(
+                "pedidos",
+                service.buscarPorCliente(usuario)
+        );
 
         return "pedido-cliente";
     }
@@ -111,14 +155,27 @@ public class PedidoController {
         return "redirect:/pedido/lista";
     }
 
-    // =========================
-    // ELIMINAR PEDIDO (ADMIN)
-    // =========================
-    @GetMapping("/eliminar")
-    public String eliminar(int id){
+    @PostMapping("/cancelar")
+    public String cancelar(int id){
 
-        service.eliminar(id);
+        Envio envio = envioRepository.findByIdPedido(id);
 
-        return "redirect:/pedido/lista";
+        if(envio == null){
+            return "redirect:/pedido/mis-pedidos";
+        }
+
+        if(!"Preparando".equals(envio.getEstado())){
+            return "redirect:/pedido/mis-pedidos?error=noCancelar";
+        }
+
+        service.actualizarEstado(id,"Cancelado");
+
+        envio.setEstado("Cancelado");
+
+        envioRepository.save(envio);
+
+        return "redirect:/pedido/mis-pedidos";
     }
+
+
 }

@@ -1,68 +1,59 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="java.util.*" %>
-<%@ page import="com.tec.producto.Producto" %>
-
-<%
-List<Producto> productos =
-(List<Producto>) request.getAttribute("productos");
-
-String nombreCategoria =
-(String) request.getAttribute("nombreCategoria");
-%>
+<%@ taglib prefix="c"
+uri="jakarta.tags.core" %>
 
 <html>
 <head>
+
 <title>Categoría</title>
+
 <link rel="stylesheet" href="/styles.css">
+
 <meta charset="UTF-8">
+
 </head>
 
 <body>
 
-<!-- HEADER -->
 <%@ include file="/header.jsp" %>
 
-<!-- TÍTULO -->
 <h1 style="text-align:center; margin-top:30px;">
-    <%= nombreCategoria != null ? nombreCategoria : "Categoría" %>
+    ${empty nombreCategoria
+    ? 'Categoría'
+    : nombreCategoria}
 </h1>
 
-<!-- PRODUCTOS -->
 <div class="productos-vertical">
 
-<%
-if(productos != null && !productos.isEmpty()){
+    <c:choose>
+        <c:when test="${not empty productos}">
 
-    for(Producto p : productos){
-%>
+            <c:forEach items="${productos}" var="p">
+                <div class="card">
+                    <img src="${p.imagen}">
 
-<div class="card">
+                    <h3> ${p.nombre} </h3>
 
-    <img src="<%= p.getImagen() %>">
+                    <p> S/. ${p.precio} </p>
 
-    <h3><%= p.getNombre() %></h3>
+                    <a href="/carrito/agregar?id=${p.id}" class="btn-agregar">
+                        Añadir al carrito
+                    </a>
 
-    <p>S/. <%= p.getPrecio() %></p>
+                </div>
 
-    <a href="/carrito/agregar?id=<%= p.getId() %>" class="btn-agregar">
-        Añadir al carrito
-    </a>
+            </c:forEach>
+        </c:when>
 
-</div>
+        <c:otherwise>
 
-<%
-    }
+            <p style="text-align:center;">
+                No hay productos en esta categoría
+            </p>
 
-}else{
-%>
-
-<p style="text-align:center;">No hay productos en esta categoría</p>
-
-<%
-}
-%>
+        </c:otherwise>
+    </c:choose>
 
 </div>
-
 </body>
 </html>

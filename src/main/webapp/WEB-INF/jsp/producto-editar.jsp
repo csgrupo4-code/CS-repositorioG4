@@ -1,18 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="com.tec.producto.Producto" %>
-<%@ page import="com.tec.categoria.*" %>
-
-<%
-CategoriaServiceImpl catService = new CategoriaServiceImpl();
-%>
-
-<%
-Producto p = (Producto) request.getAttribute("producto");
-%>
+<%@ taglib prefix="c"
+uri="jakarta.tags.core" %>
 
 <html>
-<head>
 
+<head>
 <title>Editar Producto</title>
 
 <link rel="stylesheet" href="/styles.css">
@@ -20,41 +12,39 @@ Producto p = (Producto) request.getAttribute("producto");
 </head>
 
 <body class="editar-body">
-
 <div class="editar-box">
 
 <h1>Editar Producto</h1>
 
+<c:if test="${not empty error}">
+    <div class="mensaje-error">
+        ${error}
+    </div>
+</c:if>
+
 <form action="/producto/guardarEdicion" method="post">
 
-<input type="hidden" name="id" value="<%= p.getId() %>">
+<input type="hidden" name="id" value="${producto.id}">
 
 <label>Nombre</label>
-<input type="text" name="nombre"
-value="<%= p.getNombre() %>">
+<input type="text" name="nombre" value="${producto.nombre}">
 
 <label>Precio</label>
-<input type="text" name="precio"
-value="<%= p.getPrecio() %>">
+<input type="text" name="precio" value="${producto.precio}">
 
 <label>Imagen URL</label>
-<input type="text" name="imagen"
-value="<%= p.getImagen() %>">
+<input type="text" name="imagen" value="${producto.imagen}">
 
 <label>Categoría</label>
 <select name="categoriaId" class="select-categoria">
-<%
-for(Categoria c : catService.listar()){
-%>
 
-<option value="<%= c.getId() %>"
-<%= (c.getId() == p.getCategoriaId()) ? "selected" : "" %>>
-    <%= c.getNombre() %>
-</option>
+<c:forEach items="${categorias}" var="c">
 
-<%
-}
-%>
+    <option value="${c.id}" ${c.id == producto.categoria.id ? 'selected' : ''}>
+        ${c.nombre}
+    </option>
+
+</c:forEach>
 
 </select>
 
@@ -69,10 +59,7 @@ Volver
 </a>
 
 </div>
-
 </form>
-
 </div>
-
 </body>
 </html>

@@ -1,11 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="java.util.*" %>
-<%@ page import="com.tec.pedido.Pedido" %>
-
-<%
-List<Pedido> pedidos =
-(List<Pedido>) request.getAttribute("pedidos");
-%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <html>
 <head>
@@ -18,67 +12,57 @@ List<Pedido> pedidos =
 <%@ include file="/header.jsp" %>
 
 <h1 class="titulo">📦 Pedidos</h1>
-
 <table class="tabla">
 
 <tr>
+<th>N° Pedido</th>
 <th>DNI</th>
 <th>Cliente</th>
-<th>Producto</th>
-<th>Cantidad</th>
 <th>Fecha</th>
 <th>Estado</th>
 <th>Dirección</th>
+<th>Detalle</th>
 <th>Acciones</th>
 </tr>
 
-<%
-for(Pedido p : pedidos){
-%>
+<c:forEach items="${pedidos}" var="p">
 
 <tr>
 
-<td><%= p.getDni() %></td>
-<td><%= p.getNombreCliente() %></td>
-<td><%= p.getProducto() %></td>
-<td><%= p.getCantidad() %></td>
-<td><%= p.getFecha() %></td>
+<td> #${p.idPedido} </td>
+<td> ${p.dni} </td>
+<td> ${p.nombreCliente} </td>
+<td> ${p.fecha} </td>
 
 <td>
-<form action="/pedido/actualizar" method="post">
-
-<input type="hidden" name="id" value="<%= p.getId() %>">
-
-<select name="estado">
-<option <%= "Pendiente".equals(p.getEstado()) ? "selected" : "" %>>Pendiente</option>
-<option <%= "Facturado".equals(p.getEstado()) ? "selected" : "" %>>Facturado</option>
-<option <%= "En camino".equals(p.getEstado()) ? "selected" : "" %>>En camino</option>
-<option <%= "Entregado".equals(p.getEstado()) ? "selected" : "" %>>Entregado</option>
-<option <%= "Cancelado".equals(p.getEstado()) ? "selected" : "" %>>Cancelado</option>
-</select>
-
-<button class="btn-update">Actualizar</button>
-
-</form>
+${p.estado}
 </td>
 
-<td><%= p.getDireccion() %></td>
+<td> ${p.direccion} </td>
 
 <td>
 
-<a href="/pedido/eliminar?id=<%= p.getId() %>">
-<button class="btn-delete">Eliminar</button>
+<a href="/pedido/detalle?id=${p.idPedido}">
+<button class="btn-detail">
+Ver detalle
+</button>
+
+</a>
+</td>
+
+<td>
+
+<a href="/envio/detalle?id=${p.idPedido}">
+<button class="btn-detail">
+Ver envío
+</button>
+
 </a>
 
 </td>
 
 </tr>
-
-<%
-}
-%>
-
+</c:forEach>
 </table>
-
 </body>
 </html>

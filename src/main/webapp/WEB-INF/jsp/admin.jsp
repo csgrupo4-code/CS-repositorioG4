@@ -23,6 +23,7 @@
         <a href="/producto/lista">📦 Productos</a>
         <a href="/categoria/lista">📂 Categorías</a>
         <a href="/pedido/lista">📦 Pedidos</a>
+        <a href="/envio/lista">📦 Envios</a>
 
         <!-- LOGOUT -->
         <a href="/logout">

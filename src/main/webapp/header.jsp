@@ -1,9 +1,6 @@
 <%@ page pageEncoding="UTF-8" %>
-
-<!-- HEADER -->
-<%
-String usuario = (String) session.getAttribute("usuario");
-%>
+<%@ taglib prefix="c"
+uri="jakarta.tags.core" %>
 
 <header class="top-header">
 
@@ -12,69 +9,77 @@ String usuario = (String) session.getAttribute("usuario");
     <!-- IZQUIERDA -->
     <div class="menu-container">
         <div class="menu-icon">☰</div>
-
         <div class="menu-dropdown">
-            <a href="/promociones">Promociones</a>
-            <a href="/contacto">Contacto</a>
+
+            <a href="/promociones">
+                Promociones
+            </a>
+
+            <a href="/contacto">
+                Contacto
+            </a>
         </div>
     </div>
 
     <!-- DERECHA -->
     <div class="categoria-dropdown">
-
-        <button class="btn-categorias">Categorías ▼</button>
+        <button class="btn-categorias">
+            Categorías ▼
+        </button>
 
         <div class="categoria-menu">
-            <a href="/categoria?tipo=4">Celulares 📱</a>
-            <a href="/categoria?tipo=1">Laptops 💻</a>
-            <a href="/categoria?tipo=3">Computadoras 🖥️</a>
-            <a href="/categoria?tipo=2">Impresoras 🖨️</a>
-        </div>
 
+            <c:forEach items="${categorias}" var="c">
+
+                <a href="/categoria?tipo=${c.id}">
+                    ${c.nombre}
+                </a>
+
+            </c:forEach>
+
+        </div>
     </div>
 
-    <%
-    String rol = (String) session.getAttribute("rol");
+    <c:if test="${usuario != null && rol == 'cliente'}">
 
-    if(usuario != null && "cliente".equals(rol)){
-    %>
+        <a href="/pedido/mis-pedidos">
+            📦 Mis pedidos
+        </a>
 
-  <a href="/pedido/mis-pedidos">📦 Mis pedidos</a>
-
-    <%
-    }
-    %>
+    </c:if>
 
 </div>
 
 <a href="/" class="logo">
+
     <h2>SysTec</h2>
+
 </a>
 
 <div class="info">
 
-<span>📞 981 309 331</span>
+    <span>📞 981 309 331</span>
+    <a href="/carrito">🛒</a>
+    <c:choose>
 
-<a href="/carrito">🛒</a>
+        <c:when test="${usuario != null}">
+            <span>
+                👤 ${usuario}
+            </span>
 
-<%
-if(usuario != null){
-%>
+            <a href="/logout">
+                Cerrar sesión
+            </a>
+        </c:when>
 
-<span>👤 <%= usuario %></span>
+        <c:otherwise>
 
+            <a href="/login">
+                👤 Login
+            </a>
 
-<a href="/logout">Cerrar sesión</a>
-
-<%
-}else{
-%>
-
-<a href="/login">👤 Login</a>
-
-<%
-}
-%>
+        </c:otherwise>
+    </c:choose>
 
 </div>
 

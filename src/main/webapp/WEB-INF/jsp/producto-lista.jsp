@@ -1,16 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="java.util.*" %>
-<%@ page import="com.tec.producto.Producto" %>
-<%@ page import="com.tec.categoria.*" %>
-
-<%
-List<Producto> productos =
-(List<Producto>) request.getAttribute("productos");
-
-CategoriaServiceImpl catService = new CategoriaServiceImpl();
-%>
+<%@ taglib prefix="c"
+uri="jakarta.tags.core" %>
 
 <html>
+
 <head>
 <link rel="stylesheet" href="/styles.css">
 </head>
@@ -18,14 +11,13 @@ CategoriaServiceImpl catService = new CategoriaServiceImpl();
 <body>
 
 <div class="top-productos">
-
-<a href="/admin" class="btn-volver-admin">
+<a href="/admin" class="btn-volver-admin" >
 ← Volver
 </a>
 
-<h1>Gestión de Productos</h1>
+<h1> Gestión de Productos </h1>
 
-<a href="/producto/nuevo" class="btn-add">
+<a href="/producto/nuevo" class="btn-add" >
 + Agregar Producto
 </a>
 
@@ -41,49 +33,34 @@ CategoriaServiceImpl catService = new CategoriaServiceImpl();
 <th>Acciones</th>
 </tr>
 
-<%
-for(Producto p : productos){
-
-    String nombreCategoria = "";
-
-    for(Categoria c : catService.listar()){
-        if(c.getId() == p.getCategoriaId()){
-            nombreCategoria = c.getNombre();
-        }
-    }
-%>
+<c:forEach items="${productos}" var="p">
 
 <tr>
-
 <td>
-<img src="<%= p.getImagen() %>">
+<img src="${p.imagen}">
 </td>
 
-<td><%= p.getNombre() %></td>
+<td> ${p.nombre} </td>
 
-<td>S/. <%= p.getPrecio() %></td>
+<td> S/. ${p.precio} </td>
 
-<td><%= nombreCategoria %></td>
+<td> ${p.categoria.nombre} </td>
 
 <td>
 
-<a href="/producto/editar?id=<%= p.getId() %>">
-<button class="btn-edit">Editar</button>
+<a href="/producto/editar?id=${p.id}" >
+<button class="btn-edit"> Editar </button>
 </a>
 
-<a href="/producto/eliminar?id=<%= p.getId() %>">
-<button class="btn-delete">Eliminar</button>
+<a href="/producto/eliminar?id=${p.id}" >
+<button class="btn-delete"> Eliminar </button>
 </a>
 
 </td>
 
 </tr>
 
-<%
-}
-%>
-
+</c:forEach>
 </table>
-
 </body>
 </html>

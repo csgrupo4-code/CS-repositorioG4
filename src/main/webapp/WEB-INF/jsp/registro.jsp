@@ -14,13 +14,9 @@
     <h1>Registrate</h1>
 
     <form action="/registro" method="post" class="auth-form">
-
         <input type="text" name="usuario" placeholder="Usuario" required>
-
         <input type="password" name="password" placeholder="Contraseña" required>
-
         <button type="submit">Registrarse</button>
-
     </form>
 
     <p class="auth-texto">

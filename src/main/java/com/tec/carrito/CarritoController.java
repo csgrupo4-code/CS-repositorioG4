@@ -1,39 +1,76 @@
 package com.tec.carrito;
 
-import com.tec.producto.*;
+import com.tec.producto.Producto;
+import com.tec.producto.ProductoService;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class CarritoController {
 
+    @Autowired
+    private ProductoService service;
+
     @GetMapping("/carrito")
-    public String verCarrito(HttpSession session, Model model) {
+    public String verCarrito(
+            HttpSession session,
+            Model model
+    ) {
 
         List<ItemCarrito> carrito =
-                (List<ItemCarrito>) session.getAttribute("carrito");
+                (List<ItemCarrito>)
+                        session.getAttribute("carrito");
 
         if(carrito == null){
             carrito = new ArrayList<>();
         }
 
-        model.addAttribute("carrito", carrito);
+        double total = 0;
+
+        for(ItemCarrito item : carrito){
+
+            total +=
+                    item.getProducto()
+                            .getPrecioFinal()
+                            *
+                            item.getCantidad();
+
+        }
+
+        model.addAttribute(
+                "carrito",
+                carrito
+        );
+
+        model.addAttribute(
+                "total",
+                total
+        );
 
         return "carrito";
     }
 
     @GetMapping("/carrito/agregar")
-    public String agregar(int id, HttpSession session) {
+    public String agregar(
+            int id,
+            HttpSession session
+    ) {
 
-        ProductoService service = new ProductoServiceImpl();
         Producto p = service.buscar(id);
 
+        if(p == null){
+            return "redirect:/";
+        }
+
         List<ItemCarrito> carrito =
-                (List<ItemCarrito>) session.getAttribute("carrito");
+                (List<ItemCarrito>)
+                        session.getAttribute("carrito");
 
         if(carrito == null){
             carrito = new ArrayList<>();
@@ -42,27 +79,44 @@ public class CarritoController {
         boolean encontrado = false;
 
         for(ItemCarrito item : carrito){
-            if(item.getProducto().getId() == id){
+
+            if(item.getProducto()
+                    .getId()
+                    .equals(id)){
+
                 item.aumentar();
+
                 encontrado = true;
+
                 break;
             }
         }
 
         if(!encontrado){
-            carrito.add(new ItemCarrito(p));
+
+            carrito.add(
+                    new ItemCarrito(p)
+            );
+
         }
 
-        session.setAttribute("carrito", carrito);
+        session.setAttribute(
+                "carrito",
+                carrito
+        );
 
         return "redirect:/";
     }
 
     @GetMapping("/carrito/mas")
-    public String mas(int index, HttpSession session){
+    public String mas(
+            int index,
+            HttpSession session
+    ){
 
         List<ItemCarrito> carrito =
-                (List<ItemCarrito>) session.getAttribute("carrito");
+                (List<ItemCarrito>)
+                        session.getAttribute("carrito");
 
         carrito.get(index).aumentar();
 
@@ -70,10 +124,14 @@ public class CarritoController {
     }
 
     @GetMapping("/carrito/menos")
-    public String menos(int index, HttpSession session){
+    public String menos(
+            int index,
+            HttpSession session
+    ){
 
         List<ItemCarrito> carrito =
-                (List<ItemCarrito>) session.getAttribute("carrito");
+                (List<ItemCarrito>)
+                        session.getAttribute("carrito");
 
         carrito.get(index).disminuir();
 
@@ -81,10 +139,14 @@ public class CarritoController {
     }
 
     @GetMapping("/carrito/eliminar")
-    public String eliminar(int index, HttpSession session){
+    public String eliminar(
+            int index,
+            HttpSession session
+    ){
 
         List<ItemCarrito> carrito =
-                (List<ItemCarrito>) session.getAttribute("carrito");
+                (List<ItemCarrito>)
+                        session.getAttribute("carrito");
 
         carrito.remove(index);
 

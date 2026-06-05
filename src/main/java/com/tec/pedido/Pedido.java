@@ -1,42 +1,137 @@
 package com.tec.pedido;
 
+import jakarta.persistence.*;
+import java.util.List;
+
+@Entity
 public class Pedido {
 
-    private int id;
+    @Id
+    @GeneratedValue(
+            strategy = GenerationType.IDENTITY
+    )
+    private Integer idPedido;
     private String dni;
     private String nombreCliente;
-    private String producto;
-    private int cantidad;
     private String fecha;
     private String estado;
     private String direccion;
+    private double total;
 
-    public Pedido(int id, String dni, String nombreCliente,
-                  String producto, int cantidad,
-                  String fecha, String estado, String direccion) {
+    @OneToMany(
+            cascade = CascadeType.ALL
+    )
+    private List<DetallePedido> detalles;
 
-        this.id = id;
+    public Pedido() {
+    }
+
+    public Pedido(
+            Integer idPedido,
+            String dni,
+            String nombreCliente,
+            String fecha,
+            String estado,
+            String direccion,
+            double total,
+            List<DetallePedido> detalles
+    ) {
+
+        this.idPedido = idPedido;
         this.dni = dni;
         this.nombreCliente = nombreCliente;
-        this.producto = producto;
-        this.cantidad = cantidad;
         this.fecha = fecha;
         this.estado = estado;
         this.direccion = direccion;
+        this.total = total;
+        this.detalles = detalles;
     }
 
-    public int getId(){ return id; }
-    public String getDni(){ return dni; }
-    public String getNombreCliente(){ return nombreCliente; }
-    public String getProducto(){ return producto; }
-    public int getCantidad(){ return cantidad; }
-    public String getFecha(){ return fecha; }
-    public String getEstado(){ return estado; }
-    public String getDireccion(){
+    public Integer getIdPedido() {
+        return idPedido;
+    }
+
+    public void setIdPedido(
+            Integer idPedido
+    )
+    {
+        this.idPedido = idPedido;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(
+            String dni
+    )
+    {
+        this.dni = dni;
+    }
+
+    public String getNombreCliente() {
+        return nombreCliente;
+    }
+
+    public void setNombreCliente(
+            String nombreCliente
+    )
+    {
+        this.nombreCliente = nombreCliente;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(
+            String fecha
+    )
+    {
+        this.fecha = fecha;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(
+            String estado
+    )
+    {
+        this.estado = estado;
+    }
+
+    public String getDireccion() {
         return direccion;
     }
 
-    public void setEstado(String estado){
-        this.estado = estado;
+    public void setDireccion(
+            String direccion
+    )
+    {
+        this.direccion = direccion;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(
+            double total
+    )
+    {
+        this.total = total;
+    }
+
+    public List<DetallePedido> getDetalles() {
+        return detalles;
+    }
+
+    public void setDetalles(
+            List<DetallePedido> detalles
+    )
+    {
+        this.detalles = detalles;
     }
 }

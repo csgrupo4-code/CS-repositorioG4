@@ -1,15 +1,14 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="com.tec.categoria.Categoria" %>
-
-<%
-Categoria c = (Categoria) request.getAttribute("categoria");
-boolean editar = (c != null);
-%>
+<%@ taglib prefix="c"
+uri="jakarta.tags.core" %>
 
 <html>
+
 <head>
+
 <title>Categoría</title>
 <link rel="stylesheet" href="/styles.css">
+
 </head>
 
 <body class="editar-body">
@@ -17,38 +16,62 @@ boolean editar = (c != null);
 <div class="editar-box">
 
 <h1>
-<%= editar ? "Editar Categoría" : "Nueva Categoría" %>
+
+<c:choose>
+
+    <c:when test="${not empty categoria}"> Editar Categoría </c:when>
+
+    <c:otherwise> Nueva Categoría </c:otherwise>
+
+</c:choose>
+
 </h1>
 
-<form action="<%= editar ? "/categoria/actualizar" : "/categoria/guardar" %>" method="post">
+<c:if test="${not empty error}">
 
-<% if(editar){ %>
-<input type="hidden" name="id" value="<%= c.getId() %>">
-<% } %>
+    <div class="mensaje-error"> ${error} </div>
 
-<label>Nombre de categoría</label>
+</c:if>
 
-<input type="text" name="nombre"
-value="<%= editar ? c.getNombre() : "" %>"
-placeholder="Ej: Laptops, Celulares..."
-class="input-pro"
-required>
+<form action="${not empty categoria ? '/categoria/actualizar' : '/categoria/guardar'}" method="post">
+
+<c:if test="${not empty categoria}">
+
+    <input
+            type="hidden"
+            name="id"
+            value="${categoria.id}">
+
+</c:if>
+
+<label> Nombre de categoría </label>
+
+<input
+        type="text"
+        name="nombre"
+        value="${not empty categoria ? categoria.nombre : ''}"
+        placeholder="Ej: Laptops, Celulares..."
+        class="input-pro"
+        required>
 
 <div class="editar-botones">
 
 <button type="submit" class="btn-guardar">
-<%= editar ? "Guardar Cambios" : "Crear Categoría" %>
+
+    <c:choose>
+
+        <c:when test="${not empty categoria}"> Guardar Cambios </c:when>
+        <c:otherwise> Crear Categoría </c:otherwise>
+
+    </c:choose>
+
 </button>
 
-<a href="/categoria/lista" class="btn-volver">
-Volver
-</a>
+<a href="/categoria/lista" class="btn-volver">Volver</a>
 
 </div>
 
 </form>
-
 </div>
-
 </body>
 </html>
