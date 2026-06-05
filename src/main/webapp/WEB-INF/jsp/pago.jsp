@@ -17,19 +17,31 @@
 
     <h1>Finalizar Compra</h1>
 
+    <c:if test="${param.error == 'tarjeta'}">
+    <div class="mensaje-error">
+    El número de tarjeta debe tener 16 dígitos.
+    </div>
+    </c:if>
+
+    <c:if test="${param.error == 'cvv'}">
+    <div class="mensaje-error">
+    El CVV debe tener 3 dígitos.
+    </div>
+    </c:if>
+
     <!-- FORM REAL -->
     <form action="/pedido/crear" method="post">
 
         <input type="text" name="dni" placeholder="DNI" required>
 
-        <input type="text" name="nombreCliente" placeholder="Nombre completo" required>
+        <input type="text" name="nombreCliente" value="${cliente.nombre}" required>
 
-        <input type="text" name="direccion" placeholder="Dirección" required>
+        <input type="text" name="direccion"  value="${cliente.direccion}" required>
 
         <!-- Estos son solo visuales (no se guardan aún) -->
-        <input type="text" placeholder="Número de tarjeta" maxlength="16">
-        <input type="text" placeholder="Fecha vencimiento">
-        <input type="text" placeholder="CVV" maxlength="3">
+        <input type="text" name="numeroTarjeta" placeholder="Número de tarjeta" maxlength="16" required>
+        <input type="text" name="fechaVencimiento" placeholder="Fecha vencimiento" required>
+        <input type="text" name= "cvv" placeholder="CVV" maxlength="3" required>
         <button type="submit">Confirmar Pago</button>
 
     </form>

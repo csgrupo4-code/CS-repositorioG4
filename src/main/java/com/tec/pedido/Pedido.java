@@ -2,6 +2,7 @@ package com.tec.pedido;
 
 import jakarta.persistence.*;
 import java.util.List;
+import jakarta.persistence.Transient;
 
 @Entity
 public class Pedido {
@@ -17,10 +18,11 @@ public class Pedido {
     private String estado;
     private String direccion;
     private double total;
+    @Transient
+    private String estadoEnvio;
 
-    @OneToMany(
-            cascade = CascadeType.ALL
-    )
+    @OneToMany(cascade = CascadeType.ALL)
+
     private List<DetallePedido> detalles;
 
     public Pedido() {
@@ -51,9 +53,7 @@ public class Pedido {
         return idPedido;
     }
 
-    public void setIdPedido(
-            Integer idPedido
-    )
+    public void setIdPedido(Integer idPedido)
     {
         this.idPedido = idPedido;
     }
@@ -62,9 +62,7 @@ public class Pedido {
         return dni;
     }
 
-    public void setDni(
-            String dni
-    )
+    public void setDni(String dni)
     {
         this.dni = dni;
     }
@@ -73,9 +71,7 @@ public class Pedido {
         return nombreCliente;
     }
 
-    public void setNombreCliente(
-            String nombreCliente
-    )
+    public void setNombreCliente(String nombreCliente)
     {
         this.nombreCliente = nombreCliente;
     }
@@ -84,9 +80,7 @@ public class Pedido {
         return fecha;
     }
 
-    public void setFecha(
-            String fecha
-    )
+    public void setFecha(String fecha)
     {
         this.fecha = fecha;
     }
@@ -95,9 +89,7 @@ public class Pedido {
         return estado;
     }
 
-    public void setEstado(
-            String estado
-    )
+    public void setEstado(String estado)
     {
         this.estado = estado;
     }
@@ -106,9 +98,7 @@ public class Pedido {
         return direccion;
     }
 
-    public void setDireccion(
-            String direccion
-    )
+    public void setDireccion(String direccion)
     {
         this.direccion = direccion;
     }
@@ -117,20 +107,24 @@ public class Pedido {
         return total;
     }
 
-    public void setTotal(
-            double total
-    )
+    public void setTotal(double total)
     {
         this.total = total;
+    }
+
+    public String getEstadoEnvio() {
+        return estadoEnvio;
+    }
+
+    public void setEstadoEnvio(String estadoEnvio) {
+        this.estadoEnvio = estadoEnvio;
     }
 
     public List<DetallePedido> getDetalles() {
         return detalles;
     }
 
-    public void setDetalles(
-            List<DetallePedido> detalles
-    )
+    public void setDetalles(List<DetallePedido> detalles)
     {
         this.detalles = detalles;
     }

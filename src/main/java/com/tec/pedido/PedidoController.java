@@ -67,7 +67,20 @@ public class PedidoController {
     public String crearPedido(
             String dni,
             String direccion,
+            String numeroTarjeta,
+            String fechaVencimiento,
+            String cvv,
             HttpSession session){
+
+        if(numeroTarjeta.length() != 16){
+
+            return "redirect:/pago?error=tarjeta";
+        }
+
+        if(cvv.length() != 3){
+
+            return "redirect:/pago?error=cvv";
+        }
 
         List<ItemCarrito> carrito = (List<ItemCarrito>) session.getAttribute("carrito");
 
@@ -77,8 +90,7 @@ public class PedidoController {
 
         String usuario = (String) session.getAttribute("usuario");
 
-        List<DetallePedido> detalles =
-                new ArrayList<>();
+        List<DetallePedido> detalles = new ArrayList<>();
 
         double total = 0;
 
@@ -92,9 +104,7 @@ public class PedidoController {
 
             detalles.add(detalle);
 
-            total += item.getCantidad()
-                    * item.getProducto().getPrecioFinal();
-
+            total += item.getCantidad() * item.getProducto().getPrecioFinal();
         }
 
         String fecha = LocalDate.now().toString();
@@ -136,14 +146,21 @@ public class PedidoController {
             return "redirect:/login";
         }
 
-        model.addAttribute(
-                "pedidos",
-                service.buscarPorCliente(usuario)
-        );
+        List<Pedido> pedidos = service.buscarPorCliente(usuario);
+
+        for(Pedido p : pedidos){
+
+            Envio envio = envioRepository.findByIdPedido(p.getIdPedido());
+
+            if(envio != null){
+                p.setEstadoEnvio(envio.getEstado());
+            }
+        }
+
+        model.addAttribute("pedidos", pedidos);
 
         return "pedido-cliente";
     }
-
     // =========================
     // ACTUALIZAR ESTADO (ADMIN)
     // =========================

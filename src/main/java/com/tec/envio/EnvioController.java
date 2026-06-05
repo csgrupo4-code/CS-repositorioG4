@@ -48,8 +48,18 @@ public class EnvioController {
 
         Pedido pedido = pedidoService.buscar(envio.getIdPedido());
 
-        if("Cancelado".equals(pedido.getEstado()) || "Completado".equals(pedido.getEstado())){
-            return "redirect:/envio/detalle?id=" + envio.getIdPedido();
+        if("Cancelado".equals(pedido.getEstado())){
+
+            return "redirect:/envio/detalle?id="
+                    + envio.getIdPedido()
+                    + "&error=cancelado";
+        }
+
+        if("Completado".equals(pedido.getEstado())){
+
+            return "redirect:/envio/detalle?id="
+                    + envio.getIdPedido()
+                    + "&error=completado";
         }
 
         service.actualizarEstado(id, estado);

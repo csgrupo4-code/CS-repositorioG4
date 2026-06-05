@@ -23,7 +23,8 @@ No se puede cancelar el pedido porque el envío ya se encuentra en camino.
 <tr>
 <th>Pedido</th>
 <th>Fecha</th>
-<th>Estado</th>
+<th>Estado Pedido</th>
+<th>Estado Envio</th>
 <th>Dirección</th>
 <th>Detalle</th>
 <th>Cancelar</th>
@@ -35,6 +36,7 @@ No se puede cancelar el pedido porque el envío ya se encuentra en camino.
 <td> #${p.idPedido} </td>
 <td> ${p.fecha} </td>
 <td> ${p.estado} </td>
+<td> ${p.estadoEnvio} </td>
 <td> ${p.direccion} </td>
 
 <td>

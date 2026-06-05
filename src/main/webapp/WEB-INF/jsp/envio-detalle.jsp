@@ -22,6 +22,18 @@ href="/styles.css">
 📦 Detalle del Envío
 </h1>
 
+<c:if test="${param.error == 'cancelado'}">
+<div class="mensaje-error">
+No se puede actualizar un pedido cancelado.
+</div>
+</c:if>
+
+<c:if test="${param.error == 'completado'}">
+<div class="mensaje-error">
+No se puede actualizar un pedido completado.
+</div>
+</c:if>
+
 <div class="card-detalle">
 
 <p>
