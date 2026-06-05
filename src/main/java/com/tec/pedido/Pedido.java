@@ -52,39 +52,31 @@ public class Pedido {
     public Integer getIdPedido() {
         return idPedido;
     }
-
     public void setIdPedido(Integer idPedido)
     {
         this.idPedido = idPedido;
     }
-
     public String getDni() {
         return dni;
     }
-
     public void setDni(String dni)
     {
         this.dni = dni;
     }
-
     public String getNombreCliente() {
         return nombreCliente;
     }
-
     public void setNombreCliente(String nombreCliente)
     {
         this.nombreCliente = nombreCliente;
     }
-
     public String getFecha() {
         return fecha;
     }
-
     public void setFecha(String fecha)
     {
         this.fecha = fecha;
     }
-
     public String getEstado() {
         return estado;
     }
@@ -93,37 +85,29 @@ public class Pedido {
     {
         this.estado = estado;
     }
-
     public String getDireccion() {
         return direccion;
     }
-
     public void setDireccion(String direccion)
     {
         this.direccion = direccion;
     }
-
     public double getTotal() {
         return total;
     }
-
     public void setTotal(double total)
     {
         this.total = total;
     }
-
     public String getEstadoEnvio() {
         return estadoEnvio;
     }
-
     public void setEstadoEnvio(String estadoEnvio) {
         this.estadoEnvio = estadoEnvio;
     }
-
     public List<DetallePedido> getDetalles() {
         return detalles;
     }
-
     public void setDetalles(List<DetallePedido> detalles)
     {
         this.detalles = detalles;
