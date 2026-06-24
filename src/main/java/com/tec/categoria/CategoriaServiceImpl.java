@@ -2,6 +2,7 @@ package com.tec.categoria;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.tec.producto.ProductoRepository;
 
 import java.util.List;
 
@@ -11,10 +12,13 @@ public class CategoriaServiceImpl implements CategoriaService {
     @Autowired
     private CategoriaRepository repository;
 
+    @Autowired
+    private ProductoRepository productoRepository;
+
     @Override
     public List<Categoria> listar(){
 
-        return repository.findAll();
+        return repository.findByActivoTrue();
 
     }
 
@@ -22,9 +26,7 @@ public class CategoriaServiceImpl implements CategoriaService {
     public void agregar(Categoria c){
 
         Categoria existente =
-                repository.findByNombre(
-                        c.getNombre()
-                );
+                repository.findByNombre(c.getNombre());
 
         if(existente != null){
 
@@ -54,7 +56,11 @@ public class CategoriaServiceImpl implements CategoriaService {
     @Override
     public void eliminar(int id){
 
-        repository.deleteById(id);
+        Categoria categoria = repository.findById(id).orElse(null);
 
+        if(categoria != null){
+            categoria.setActivo(false);
+            repository.save(categoria);
+        }
     }
 }

@@ -23,14 +23,11 @@ public class MetricaController {
         Map<String,Integer> datos = new TreeMap<>();
 
         for(Pedido p : pedidos){
-
             String fecha = p.getFecha();
-
             datos.put(fecha, datos.getOrDefault(fecha,0) + 1);
         }
 
-        model.addAttribute("datos", datos
-        );
+        model.addAttribute("datos", datos);
 
         return "metrica-pedidos";
     }

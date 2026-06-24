@@ -30,16 +30,10 @@ rel="stylesheet">
     <div class="banner-content">
 
         <h1 class="titulo-banner">
-
             Las mejores ofertas
-
         </h1>
 
-        <p>
-
-            Encuentra tecnología al mejor precio
-
-        </p>
+        <p>Encuentra tecnología al mejor precio</p>
 
     </div>
 
@@ -60,13 +54,9 @@ Productos Destacados
         <div class="card">
             <img src="${p.imagen}">
 
-            <h3>
-                ${p.nombre}
-            </h3>
+            <h3>${p.nombre}</h3>
 
-            <p>
-                S/. ${p.precio}
-            </p>
+            <p>S/. ${p.precio}</p>
 
             <a href="/carrito/agregar?id=${p.id}" class="btn-add-cart">
                 Añadir al Carrito
@@ -77,127 +67,48 @@ Productos Destacados
 </c:forEach>
 </div>
 
-<!-- CELULARES -->
+<c:forEach items="${categorias}" var="c">
 
-<h2 style="text-align:left; margin-left: 100px;">
-Celulares
-</h2>
+    <h2 style="text-align:left; margin-left:100px;">
+        ${c.nombre}
+    </h2>
 
-<div class="productos">
+    <div class="productos">
 
-<c:forEach items="${celulares}" var="p">
+        <c:forEach items="${productos}" var="p">
 
-    <div class="card">
+            <c:if test="${p.categoria.id == c.id}">
 
-        <img src="${p.imagen}">
+                <div class="card">
 
-        <h3>${p.nombre}</h3>
-        <p>S/. ${p.precio}</p>
+                    <img src="${p.imagen}">
 
+                    <h3>${p.nombre}</h3>
+
+                    <p>S/. ${p.precio}</p>
+
+                    <a href="/carrito/agregar?id=${p.id}" class="btn-add-cart">
+                        Añadir al Carrito
+                    </a>
+
+                </div>
+            </c:if>
+        </c:forEach>
     </div>
 
 </c:forEach>
-
-</div>
-
-<!-- LAPTOPS -->
-
-<h2 style="text-align:left; margin-left: 100px;">
-Laptops
-</h2>
-
-<div class="productos">
-
-<c:forEach items="${laptops}" var="p">
-
-    <div class="card">
-
-        <img src="${p.imagen}">
-
-        <h3>
-            ${p.nombre}
-        </h3>
-
-        <p>
-            S/. ${p.precio}
-        </p>
-
-    </div>
-
-</c:forEach>
-
-</div>
-
-<!-- COMPUTADORAS -->
-
-<h2 style="text-align:left; margin-left: 100px;">
-Computadoras
-</h2>
-
-<div class="productos">
-
-<c:forEach items="${computadoras}" var="p">
-
-    <div class="card">
-
-        <img src="${p.imagen}">
-
-        <h3>
-            ${p.nombre}
-        </h3>
-
-        <p>
-            S/. ${p.precio}
-        </p>
-
-    </div>
-
-</c:forEach>
-</div>
-
-<!-- IMPRESORAS -->
-
-<h2 style="text-align:left; margin-left: 100px;">
-Impresoras
-</h2>
-
-<div class="productos">
-
-<c:forEach items="${impresoras}" var="p">
-
-    <div class="card">
-
-        <img src="${p.imagen}">
-
-        <h3>
-            ${p.nombre}
-        </h3>
-
-        <p>
-            S/. ${p.precio}
-        </p>
-
-    </div>
-
-</c:forEach>
-
-</div>
 
 <footer class="footer">
 
 <div class="footer-content">
 
 <p>
-
 © 2026 SysTec - Todos los derechos reservados
-
 </p>
 
 <p>
-
 📞 981 309 331 |
 ✉️ contacto@systec.com
-
 </p>
 
 </div>

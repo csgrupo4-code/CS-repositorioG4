@@ -13,15 +13,10 @@ public class Producto {
                     GenerationType.IDENTITY
     )
     private Integer id;
-
     private String nombre;
-
     private Double precio;
-
     private String imagen;
-
     private Boolean destacado;
-
     private Boolean activo;
 
     @ManyToOne

@@ -1,9 +1,6 @@
 package com.tec.producto;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -31,9 +28,7 @@ public class ProductoServiceImpl implements ProductoService {
     @Override
     public Producto buscar(int id){
 
-        return repository
-                .findById(id)
-                .orElse(null);
+        return repository.findById(id).orElse(null);
 
     }
 
@@ -67,4 +62,6 @@ public class ProductoServiceImpl implements ProductoService {
         return repository
                 .findTop4ByCategoriaId(id);
     }
+
+
 }

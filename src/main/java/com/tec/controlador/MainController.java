@@ -5,6 +5,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import java.util.*;
 import com.tec.producto.*;
+import com.tec.categoria.Categoria;
+import com.tec.categoria.CategoriaService;
 
 @Controller
 public class MainController {
@@ -12,37 +14,17 @@ public class MainController {
     @Autowired
     private ProductoService service;
 
+    @Autowired
+    private CategoriaService categoriaService;
+
     @GetMapping("/")
     public String inicio(Model model) {
 
-        model.addAttribute(
-                "productos",
-                service.listar()
-        );
-
-        model.addAttribute(
-                "celulares",
-                service.listarPorCategoria(4)
-        );
-
-        model.addAttribute(
-                "laptops",
-                service.listarPorCategoria(1)
-        );
-
-        model.addAttribute(
-                "computadoras",
-                service.listarPorCategoria(3)
-        );
-
-        model.addAttribute(
-                "impresoras",
-                service.listarPorCategoria(2)
-        );
+        model.addAttribute("productos",service.listar());
+        model.addAttribute("categorias", categoriaService.listar());
 
         return "main";
     }
-
     @GetMapping("/contacto")
     public String contacto() {
 
@@ -53,10 +35,7 @@ public class MainController {
     @GetMapping("/promociones")
     public String promociones(Model model) {
 
-        model.addAttribute(
-                "productos",
-                service.listar()
-        );
+        model.addAttribute("productos", service.listar());
 
         return "promociones";
     }
@@ -65,65 +44,39 @@ public class MainController {
     public String categoria(
             Integer tipo,
             Model model
-    ){
+    ) {
 
-        List<Producto> lista =
-                service.listar();
+        List<Producto> lista = service.listar();
+        List<Producto> filtrados = new ArrayList<>();
 
-        List<Producto> filtrados =
-                new ArrayList<>();
+        if (tipo != null) {
 
-        if(tipo != null){
+            for (Producto p : lista) {
 
-            for(Producto p : lista){
-
-                if(
-                        p.getCategoria()
-                                .getId() == tipo
-                ){
-
+                if (
+                        p.getCategoria().getId().equals(tipo)
+                ) {
                     filtrados.add(p);
-
                 }
             }
 
         } else {
 
             filtrados = lista;
-
         }
 
-        String nombreCategoria =
-                "Todas";
+        String nombreCategoria = "Todas";
 
-        if(tipo != null){
+        if (tipo != null) {
+            Categoria categoria = categoriaService.buscar(tipo);
 
-            if(tipo == 4)
-                nombreCategoria =
-                        "Celulares";
-
-            if(tipo == 1)
-                nombreCategoria =
-                        "Laptops";
-
-            if(tipo == 3)
-                nombreCategoria =
-                        "Computadoras";
-
-            if(tipo == 2)
-                nombreCategoria =
-                        "Impresoras";
+            if (categoria != null) {
+                nombreCategoria = categoria.getNombre();
+            }
         }
 
-        model.addAttribute(
-                "productos",
-                filtrados
-        );
-
-        model.addAttribute(
-                "nombreCategoria",
-                nombreCategoria
-        );
+        model.addAttribute("productos", filtrados);
+        model.addAttribute("nombreCategoria", nombreCategoria);
 
         return "categoria";
     }

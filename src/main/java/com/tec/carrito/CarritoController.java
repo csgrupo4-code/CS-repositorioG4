@@ -23,9 +23,7 @@ public class CarritoController {
             Model model
     ) {
 
-        List<ItemCarrito> carrito =
-                (List<ItemCarrito>)
-                        session.getAttribute("carrito");
+        List<ItemCarrito> carrito = (List<ItemCarrito>) session.getAttribute("carrito");
 
         if(carrito == null){
             carrito = new ArrayList<>();
@@ -35,23 +33,12 @@ public class CarritoController {
 
         for(ItemCarrito item : carrito){
 
-            total +=
-                    item.getProducto()
-                            .getPrecioFinal()
-                            *
-                            item.getCantidad();
+            total += item.getProducto().getPrecioFinal() * item.getCantidad();
 
         }
 
-        model.addAttribute(
-                "carrito",
-                carrito
-        );
-
-        model.addAttribute(
-                "total",
-                total
-        );
+        model.addAttribute( "carrito", carrito);
+        model.addAttribute("total", total);
 
         return "carrito";
     }
@@ -68,9 +55,7 @@ public class CarritoController {
             return "redirect:/";
         }
 
-        List<ItemCarrito> carrito =
-                (List<ItemCarrito>)
-                        session.getAttribute("carrito");
+        List<ItemCarrito> carrito = (List<ItemCarrito>) session.getAttribute("carrito");
 
         if(carrito == null){
             carrito = new ArrayList<>();
@@ -80,30 +65,20 @@ public class CarritoController {
 
         for(ItemCarrito item : carrito){
 
-            if(item.getProducto()
-                    .getId()
-                    .equals(id)){
-
+            if(item.getProducto().getId().equals(id)){
                 item.aumentar();
-
                 encontrado = true;
-
                 break;
             }
         }
 
         if(!encontrado){
 
-            carrito.add(
-                    new ItemCarrito(p)
-            );
+            carrito.add(new ItemCarrito(p));
 
         }
 
-        session.setAttribute(
-                "carrito",
-                carrito
-        );
+        session.setAttribute("carrito", carrito);
 
         return "redirect:/";
     }
@@ -114,9 +89,7 @@ public class CarritoController {
             HttpSession session
     ){
 
-        List<ItemCarrito> carrito =
-                (List<ItemCarrito>)
-                        session.getAttribute("carrito");
+        List<ItemCarrito> carrito = (List<ItemCarrito>) session.getAttribute("carrito");
 
         carrito.get(index).aumentar();
 
@@ -129,9 +102,7 @@ public class CarritoController {
             HttpSession session
     ){
 
-        List<ItemCarrito> carrito =
-                (List<ItemCarrito>)
-                        session.getAttribute("carrito");
+        List<ItemCarrito> carrito = (List<ItemCarrito>) session.getAttribute("carrito");
 
         carrito.get(index).disminuir();
 
@@ -144,9 +115,7 @@ public class CarritoController {
             HttpSession session
     ){
 
-        List<ItemCarrito> carrito =
-                (List<ItemCarrito>)
-                        session.getAttribute("carrito");
+        List<ItemCarrito> carrito = (List<ItemCarrito>) session.getAttribute("carrito");
 
         carrito.remove(index);
 

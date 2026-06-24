@@ -14,6 +14,8 @@ public class UsuarioCliente {
     private String usuario;
     private String password;
     private String estadoUsuario;
+    private String dni;
+
 
     public UsuarioCliente() {
     }
@@ -69,4 +71,13 @@ public class UsuarioCliente {
     public void setUsuario(String usuario) {
         this.usuario = usuario;
     }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
 }

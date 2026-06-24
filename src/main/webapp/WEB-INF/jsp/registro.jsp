@@ -16,6 +16,7 @@
     <form action="/registro" method="post" class="auth-form">
 
         <input type="text" name="nombre" placeholder="Nombre completo" required>
+        <input type="text" name="dni" placeholder="DNI" maxlength="8" required>
         <input type="text" name="telefono" maxlength="9" placeholder="Teléfono" required>
         <input type="text" name="direccion" placeholder="Dirección" required>
         <input type="text" name="usuario" placeholder="Usuario" required>

@@ -32,7 +32,7 @@
     <!-- FORM REAL -->
     <form action="/pedido/crear" method="post">
 
-        <input type="text" name="dni" placeholder="DNI" required>
+        <input type="text" name="dni" value="${cliente.dni}" readonly>
 
         <input type="text" name="nombreCliente" value="${cliente.nombre}" required>
 

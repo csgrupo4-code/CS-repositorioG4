@@ -38,9 +38,7 @@ uri="jakarta.tags.core" %>
 const etiquetas = [
 
 <c:forEach items="${datos}" var="d">
-
 "${d.key}",
-
 </c:forEach>
 
 ];

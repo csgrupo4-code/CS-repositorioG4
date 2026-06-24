@@ -52,7 +52,7 @@ public class CategoriaController {
         }
 
         try{
-            service.agregar(new Categoria(null, nombre.trim())
+            service.agregar(new Categoria(null, nombre.trim(), true)
             );
 
         }catch(Exception e){
@@ -98,8 +98,10 @@ public class CategoriaController {
     @PostMapping("/actualizar")
     public String actualizar(int id, String nombre){
 
-        service.actualizar(new Categoria(id, nombre)
-        );
+        Categoria categoria = service.buscar(id);
+        categoria.setNombre(nombre);
+        service.actualizar(categoria);
+
         return "redirect:/categoria/lista";
     }
 }

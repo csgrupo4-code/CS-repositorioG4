@@ -62,6 +62,7 @@ public class LoginController {
 
     @PostMapping("/registro")
     public String guardar(
+            String dni,
             String nombre,
             String telefono,
             String direccion,
@@ -69,8 +70,21 @@ public class LoginController {
             String password
     ){
 
+        if(dni == null || !dni.matches("\\d{8}")){
+            return "redirect:/registro?error=dni";
+        }
+
+        if(telefono == null || !telefono.matches("\\d{9}")){
+            return "redirect:/registro?error=telefono";
+        }
+
+        if(repository.findByUsuario(usuario) != null){
+            return "redirect:/registro?error=usuario";
+        }
+
         UsuarioCliente cliente = new UsuarioCliente();
 
+        cliente.setDni(dni);
         cliente.setNombre(nombre);
         cliente.setTelefono(telefono);
         cliente.setDireccion(direccion);

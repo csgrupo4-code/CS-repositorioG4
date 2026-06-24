@@ -12,6 +12,8 @@ public class Envio {
     private Integer idEnvio;
     private String estado;
     private Integer idPedido;
+    private String observacion;
+    private String fechaEntrega;
 
     public Envio() {
     }
@@ -39,4 +41,12 @@ public class Envio {
     public void setIdPedido(Integer idPedido) {
         this.idPedido = idPedido;
     }
+
+    public String getObservacion() {return observacion;}
+
+    public void setObservacion(String observacion) {this.observacion = observacion;}
+
+    public String getFechaEntrega() {return fechaEntrega;}
+
+    public void setFechaEntrega(String fechaEntrega) {this.fechaEntrega = fechaEntrega;}
 }
