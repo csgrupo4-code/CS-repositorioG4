@@ -1,5 +1,9 @@
 package com.tec.pedido;
 
+import com.tec.producto.Producto;
+import com.tec.producto.ProductoRepository;
+import com.tec.usuario.UsuarioCliente;
+import com.tec.usuario.UsuarioClienteRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +26,14 @@ public class PedidoController {
     @Autowired
     private PedidoService service;
 
+    @Autowired
+    private UsuarioClienteRepository usuarioRepository;
+
+    @Autowired
+    private DetallePedidoRepository detalleRepository;
+
+    @Autowired
+    private ProductoRepository productoRepository;
     // =========================
     // ADMIN - VER TODOS LOS PEDIDOS
     // =========================
@@ -37,7 +49,6 @@ public class PedidoController {
         }
 
         model.addAttribute("pedidos", service.listar());
-
         return "pedido-admin";
     }
 
@@ -53,7 +64,22 @@ public class PedidoController {
 
         Pedido pedido = service.buscar(id);
 
+        List<DetallePedido> detalles = detalleRepository.findByIdPedido(id);
+
+        for(DetallePedido d : detalles){
+
+            Producto producto = productoRepository.findById(d.getIdProducto()).orElse(null);
+
+            if(producto != null){
+
+                d.setNombreProducto(
+                        producto.getNombre()
+                );
+            }
+        }
+
         model.addAttribute("pedido", pedido);
+        model.addAttribute("detalles", detalles);
 
         return "detalle-pedido-admin";
     }
@@ -73,12 +99,10 @@ public class PedidoController {
             HttpSession session){
 
         if(numeroTarjeta.length() != 16){
-
             return "redirect:/pago?error=tarjeta";
         }
 
         if(cvv.length() != 3){
-
             return "redirect:/pago?error=cvv";
         }
 
@@ -89,38 +113,48 @@ public class PedidoController {
         }
 
         String usuario = (String) session.getAttribute("usuario");
-
+        UsuarioCliente cliente = usuarioRepository.findByUsuario(usuario);
+        Integer idUsuario = cliente.getIdUsuario();
         List<DetallePedido> detalles = new ArrayList<>();
 
         double total = 0;
 
         for(ItemCarrito item : carrito){
 
+            double subtotal = item.getCantidad() * item.getProducto().getPrecioFinal();
+
             DetallePedido detalle = new DetallePedido(
-                            item.getProducto().getNombre(),
+                            item.getProducto().getId(),
                             item.getCantidad(),
-                            item.getProducto().getPrecioFinal()
+                            item.getProducto().getPrecioFinal(),
+                            subtotal
                     );
 
             detalles.add(detalle);
-
-            total += item.getCantidad() * item.getProducto().getPrecioFinal();
+            total += subtotal;
         }
 
         String fecha = LocalDate.now().toString();
 
         Pedido pedido = new Pedido(
                 null,
+                idUsuario,
                 dni,
                 usuario,
                 fecha,
                 "Facturado",
                 direccion,
-                total,
-                detalles
+                total
         );
 
         pedido = service.agregar(pedido);
+
+        for(DetallePedido d : detalles){
+
+            d.setIdPedido(pedido.getIdPedido());
+
+            detalleRepository.save(d);
+        }
 
         Envio envio = new Envio();
 
@@ -194,5 +228,5 @@ public class PedidoController {
         return "redirect:/pedido/mis-pedidos";
     }
 
-
 }
+

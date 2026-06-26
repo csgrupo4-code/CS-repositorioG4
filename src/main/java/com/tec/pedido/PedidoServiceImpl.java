@@ -12,7 +12,6 @@ public class PedidoServiceImpl implements PedidoService {
 
     @Override
     public List<Pedido> listar() {
-
         return repository.findAll();
     }
 
@@ -31,9 +30,7 @@ public class PedidoServiceImpl implements PedidoService {
 
         Pedido pedido = buscar(id);
 
-        if(pedido != null){
-            pedido.setEstado(estado);
-
+        if(pedido != null){pedido.setEstado(estado);
             repository.save(pedido);
         }
     }

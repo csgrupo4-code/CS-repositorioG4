@@ -6,67 +6,86 @@ import jakarta.persistence.*;
 public class DetallePedido {
 
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.IDENTITY
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Integer idDetalle;
-
-    private String producto;
-
+    private Integer idPedido;
+    private Integer idProducto;
     private int cantidad;
+    private double precioUnitario;
+    private double subtotal;
 
-    private double precio;
+    @Transient
+    private String nombreProducto;
 
     public DetallePedido() {
     }
 
     public DetallePedido(
-            String producto,
+            Integer idProducto,
             int cantidad,
-            double precio
+            double precioUnitario,
+            double subtotal
     ) {
-        this.producto = producto;
+        this.idProducto = idProducto;
         this.cantidad = cantidad;
-        this.precio = precio;
+        this.precioUnitario = precioUnitario;
+        this.subtotal = subtotal;
     }
 
     public Integer getIdDetalle() {
         return idDetalle;
     }
 
-    public void setIdDetalle(
-            Integer idDetalle
-    ) {
+    public void setIdDetalle(Integer idDetalle) {
         this.idDetalle = idDetalle;
     }
 
-    public String getProducto() {
-        return producto;
+    public Integer getIdPedido() {
+        return idPedido;
     }
 
-    public void setProducto(
-            String producto
-    ) {
-        this.producto = producto;
+    public void setIdPedido(Integer idPedido) {
+        this.idPedido = idPedido;
+    }
+
+    public Integer getIdProducto() {
+        return idProducto;
+    }
+
+    public void setIdProducto(Integer idProducto) {
+        this.idProducto = idProducto;
     }
 
     public int getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(
-            int cantidad
-    ) {
+    public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
 
-    public double getPrecio() {
-        return precio;
+    public double getPrecioUnitario() {
+        return precioUnitario;
     }
 
-    public void setPrecio(
-            double precio
-    ) {
-        this.precio = precio;
+    public void setPrecioUnitario(double precioUnitario) {
+        this.precioUnitario = precioUnitario;
+    }
+
+    public double getSubtotal() {
+        return subtotal;
+    }
+
+    public void setSubtotal(double subtotal) {
+        this.subtotal = subtotal;
+    }
+
+    public String getNombreProducto() {
+        return nombreProducto;
+    }
+
+    public void setNombreProducto(String nombreProducto) {
+        this.nombreProducto = nombreProducto;
     }
 }
