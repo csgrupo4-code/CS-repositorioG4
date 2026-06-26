@@ -20,20 +20,8 @@ public class ProductoController {
     @GetMapping("/producto/lista")
     public String lista(Model model) {
 
-        model.addAttribute(
-                "productos",
-                service.listar()
-        );
-
+        model.addAttribute("productos", service.listar());
         return "producto-lista";
-    }
-
-    @GetMapping("/producto/eliminar")
-    public String eliminar(int id) {
-
-        service.eliminar(id);
-
-        return "redirect:/producto/lista";
     }
 
     @GetMapping("/producto/editar")
@@ -42,16 +30,8 @@ public class ProductoController {
             Model model
     ){
 
-        model.addAttribute(
-                "producto",
-                service.buscar(id)
-        );
-
-        model.addAttribute(
-                "categorias",
-                categoriaService.listar()
-        );
-
+        model.addAttribute("producto", service.buscar(id));
+        model.addAttribute("categorias", categoriaService.listar());
         return "producto-editar";
     }
 
@@ -67,64 +47,64 @@ public class ProductoController {
 
         if(precio <= 0){
 
-            Categoria categoria =
-                    categoriaService.buscar(categoriaId);
-
-            Producto producto =
-                    new Producto(
+            Categoria categoria = categoriaService.buscar(categoriaId);
+            Producto viejo = service.buscar(id);
+            Producto producto = new Producto(
                             id,
                             nombre,
                             precio,
                             imagen,
-                            false,
-                            true,
+                            viejo.getDestacado(),
+                            viejo.getActivo(),
                             categoria
                     );
 
-            model.addAttribute(
-                    "error",
-                    "El precio debe ser mayor a 0"
-            );
-
-            model.addAttribute(
-                    "producto",
-                    producto
-            );
-
-            model.addAttribute(
-                    "categorias",
-                    categoriaService.listar()
-            );
-
+            model.addAttribute("error", "El precio debe ser mayor a 0");
+            model.addAttribute("producto", producto);
+            model.addAttribute("categorias", categoriaService.listar());
             return "producto-editar";
         }
 
         Categoria categoria = categoriaService.buscar(categoriaId);
+        Producto viejo = service.buscar(id);
 
         Producto p = new Producto(
                 id,
                 nombre,
                 precio,
                 imagen,
-                false,
-                true,
+                viejo.getDestacado(),
+                viejo.getActivo(),
                 categoria
         );
 
         service.editar(p);
-
         return "redirect:/producto/lista";
     }
 
     @GetMapping("/producto/nuevo")
     public String nuevo(Model model){
 
-        model.addAttribute(
-                "categorias",
-                categoriaService.listar()
-        );
-
+        model.addAttribute("categorias", categoriaService.listar());
         return "producto-nuevo";
+    }
+
+    @GetMapping("/producto/desactivar")
+    public String desactivar(int id){
+
+        Producto producto = service.buscar(id);
+        producto.setActivo(false);
+        service.editar(producto);
+        return "redirect:/producto/lista";
+    }
+
+    @GetMapping("/producto/activar")
+    public String activar(int id){
+
+        Producto producto = service.buscar(id);
+        producto.setActivo(true);
+        service.editar(producto);
+        return "redirect:/producto/lista";
     }
 
     @PostMapping("/producto/guardarNuevo")
@@ -138,24 +118,13 @@ public class ProductoController {
 
         if(precio <= 0){
 
-            model.addAttribute(
-                    "error",
-                    "El precio debe ser mayor a 0"
-            );
-
-            model.addAttribute(
-                    "categorias",
-                    categoriaService.listar()
-            );
-
+            model.addAttribute("error", "El precio debe ser mayor a 0");
+            model.addAttribute("categorias", categoriaService.listar());
             return "producto-nuevo";
 
         }
 
-        Categoria categoria =
-                categoriaService.buscar(
-                        categoriaId
-                );
+        Categoria categoria = categoriaService.buscar(categoriaId);
 
         Producto p = new Producto(
                 null,
@@ -168,9 +137,7 @@ public class ProductoController {
         );
 
         service.agregar(p);
-
         return "redirect:/producto/lista";
     }
 
-
-    }
+}

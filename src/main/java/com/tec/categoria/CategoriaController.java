@@ -104,4 +104,28 @@ public class CategoriaController {
 
         return "redirect:/categoria/lista";
     }
+
+    @GetMapping("/desactivar")
+    public String desactivar(int id){
+
+        Categoria categoria = service.buscar(id);
+
+        categoria.setActivo(false);
+
+        service.actualizar(categoria);
+
+        return "redirect:/categoria/lista";
+    }
+
+    @GetMapping("/activar")
+    public String activar(int id){
+
+        Categoria categoria = service.buscar(id);
+
+        categoria.setActivo(true);
+
+        service.actualizar(categoria);
+
+        return "redirect:/categoria/lista";
+    }
 }

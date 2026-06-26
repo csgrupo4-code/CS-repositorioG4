@@ -21,7 +21,7 @@ public class MainController {
     public String inicio(Model model) {
 
         model.addAttribute("productos",service.listar());
-        model.addAttribute("categorias", categoriaService.listar());
+        model.addAttribute("categorias", categoriaService.listarActivas());
 
         return "main";
     }
@@ -46,37 +46,35 @@ public class MainController {
             Model model
     ) {
 
-        List<Producto> lista = service.listar();
+        List<Producto> lista = service.listarActivos();
         List<Producto> filtrados = new ArrayList<>();
+
+        String nombreCategoria = "Todas";
 
         if (tipo != null) {
 
+            Categoria categoria = categoriaService.buscar(tipo);
+
+            if (categoria == null || !categoria.getActivo()) {
+                return "redirect:/";
+            }
+
+            nombreCategoria = categoria.getNombre();
+
             for (Producto p : lista) {
 
-                if (
-                        p.getCategoria().getId().equals(tipo)
-                ) {
+                if (p.getCategoria().getId().equals(tipo)) {
                     filtrados.add(p);
                 }
             }
 
         } else {
-
             filtrados = lista;
-        }
-
-        String nombreCategoria = "Todas";
-
-        if (tipo != null) {
-            Categoria categoria = categoriaService.buscar(tipo);
-
-            if (categoria != null) {
-                nombreCategoria = categoria.getNombre();
-            }
         }
 
         model.addAttribute("productos", filtrados);
         model.addAttribute("nombreCategoria", nombreCategoria);
+        model.addAttribute("categorias", categoriaService.listarActivas());
 
         return "categoria";
     }

@@ -33,6 +33,7 @@ uri="jakarta.tags.core" %>
         <tr>
             <th>ID</th>
             <th>Nombre</th>
+            <th>Estado</th>
             <th>Acciones</th>
         </tr>
 
@@ -42,14 +43,41 @@ uri="jakarta.tags.core" %>
                     <tr>
                         <td>${c.id}</td>
                         <td>${c.nombre}</td>
+
+                        <td>
+                            <c:choose>
+
+                                <c:when test="${c.activo}">
+                                    🟢 Activa
+                                </c:when>
+
+                                <c:otherwise>
+                                    🔴 Inactiva
+                                </c:otherwise>
+
+                            </c:choose>
+
+                        </td>
+
                         <td>
                             <a href="/categoria/editar?id=${c.id}" class="btn-editar">
                                 ✏ Editar
                             </a>
 
-                            <a href="/categoria/eliminar?id=${c.id}" class="btn-eliminar">
-                                🗑 Eliminar
-                            </a>
+                            <c:choose>
+                                <c:when test="${c.activo}">
+
+                                    <a href="/categoria/desactivar?id=${c.id}" class="btn-eliminar">
+                                        Desactivar
+                                    </a>
+                                </c:when>
+
+                                <c:otherwise>
+                                    <a href="/categoria/activar?id=${c.id}" class="btn-guardar">
+                                        Activar
+                                    </a>
+                                </c:otherwise>
+                            </c:choose>
                         </td>
                     </tr>
                 </c:forEach>

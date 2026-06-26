@@ -21,9 +21,10 @@
         <h2>SysTec Admin</h2>
 
         <a href="/producto/lista">📦 Productos</a>
+        <a href="/usuario/lista">👤 Usuarios</a>
         <a href="/categoria/lista">📂 Categorías</a>
         <a href="/pedido/lista">📦 Pedidos</a>
-        <a href="/envio/lista">📦 Envios</a>
+        <a href="/envio/lista">🚚 Envios</a>
         <a href="/metrica/pedidos-dia">📈 Métricas</a>
 
         <!-- LOGOUT -->

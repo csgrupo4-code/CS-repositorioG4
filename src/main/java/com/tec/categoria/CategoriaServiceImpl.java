@@ -17,16 +17,18 @@ public class CategoriaServiceImpl implements CategoriaService {
 
     @Override
     public List<Categoria> listar(){
+        return repository.findAll();
+    }
 
+    @Override
+    public List<Categoria> listarActivas() {
         return repository.findByActivoTrue();
-
     }
 
     @Override
     public void agregar(Categoria c){
 
-        Categoria existente =
-                repository.findByNombre(c.getNombre());
+        Categoria existente = repository.findByNombre(c.getNombre());
 
         if(existente != null){
 
@@ -39,18 +41,12 @@ public class CategoriaServiceImpl implements CategoriaService {
 
     @Override
     public Categoria buscar(int id){
-
-        return repository
-                .findById(id)
-                .orElse(null);
-
+        return repository.findById(id).orElse(null);
     }
 
     @Override
     public void actualizar(Categoria c){
-
         repository.save(c);
-
     }
 
     @Override
