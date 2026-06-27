@@ -25,7 +25,7 @@
         <a href="/categoria/lista">📂 Categorías</a>
         <a href="/pedido/lista">📦 Pedidos</a>
         <a href="/envio/lista">🚚 Envios</a>
-        <a href="/metrica/pedidos-dia">📈 Métricas</a>
+        <a href="/metrica">📈 Métricas</a>
 
         <!-- LOGOUT -->
         <a href="/logout">
