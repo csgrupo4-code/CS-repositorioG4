@@ -33,11 +33,7 @@
 <td> ${p.dni} </td>
 <td> ${p.nombreCliente} </td>
 <td> ${p.fecha} </td>
-
-<td>
-${p.estado}
-</td>
-
+<td> ${p.estado} </td>
 <td> ${p.direccion} </td>
 
 <td>

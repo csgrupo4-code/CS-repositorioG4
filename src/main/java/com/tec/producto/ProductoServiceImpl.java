@@ -46,8 +46,7 @@ public class ProductoServiceImpl implements ProductoService {
     }
 
     @Override
-    public List<Producto> listarPorCategoria(Integer id)
-    {
+    public List<Producto> listarPorCategoria(Integer id) {
         return repository.findTop4ByCategoriaId(id);
     }
 

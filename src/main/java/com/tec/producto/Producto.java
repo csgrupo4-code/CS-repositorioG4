@@ -9,8 +9,7 @@ public class Producto {
 
     @Id
     @GeneratedValue(
-            strategy =
-                    GenerationType.IDENTITY
+            strategy = GenerationType.IDENTITY
     )
     private Integer id;
     private String nombre;

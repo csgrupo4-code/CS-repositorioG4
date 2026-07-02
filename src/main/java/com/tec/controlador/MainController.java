@@ -20,7 +20,7 @@ public class MainController {
     @GetMapping("/")
     public String inicio(Model model) {
 
-        model.addAttribute("productos",service.listar());
+        model.addAttribute("productos",service.listarActivos());
         model.addAttribute("categorias", categoriaService.listarActivas());
 
         return "main";
@@ -35,7 +35,7 @@ public class MainController {
     @GetMapping("/promociones")
     public String promociones(Model model) {
 
-        model.addAttribute("productos", service.listar());
+        model.addAttribute("productos", service.listarActivos());
 
         return "promociones";
     }
